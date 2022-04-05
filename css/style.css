@@ -1,0 +1,105 @@
+@import 'https://unpkg.com/open-props';
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-sans);
+    background-color: var(--gray-7);
+    margin: 0;
+    color: var(--gray-0);
+}
+
+/* En-tête */
+.page-header {
+    background-color: var(--gray-9);
+    padding: var(--size-8) var(--size-10);
+    text-align: center;
+}
+
+.page-header__title {
+    font-size: var(--font-size-8);
+    font-weight: var(--font-weight-9);
+}
+
+/* Contenu principal */
+.main-content {
+    padding: var(--size-8) var(--size-10);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--size-7);
+}
+
+.main-content__section {
+    background-color: var(--gray-2);
+    color: var(--gray-9);
+    border-radius: var(--radius-3);
+    padding: var(--size-6);
+    width: min(70vw, 600px);
+}
+
+.main-content__section__title {
+    text-align: center;
+    font-size: var(--font-size-5);
+    font-weight: var(--font-weight-7);
+    margin: 0;
+    margin-bottom: var(--size-4);
+}
+
+.main-content__section__nav {
+    width: 90%;
+    margin: auto;
+}
+
+/* Navigation */
+.navigation__list {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-2);
+    font-size: var(--font-size-3);
+}
+
+.navigation__list__link {
+    color: var(--gray-9);
+    font-weight: var(--font-weight-6);
+}
+
+.navigation__list__link:hover {
+    color: var(--gray-9);
+    text-decoration: none;
+    font-weight: var(--font-weight-9);
+}
+
+.navigation__list__link.navigation__list__link--disabled {
+    color: var(--gray-4);
+    pointer-events: none;
+}
+
+/* Section Snake */
+.snake-section__paragraph {
+    font-size: var(--font-size-3);
+    text-align: center;
+}
+
+.snake-section__paragraph__link {
+    color: var(--gray-9);
+    font-weight: var(--font-weight-6);
+}
+
+.snake-section__paragraph__link:hover {
+    color: var(--gray-9);
+    text-decoration: none;
+    font-weight: var(--font-weight-9);
+}
+
+.snake-section__paragraph__link.snake-section__paragraph__link--disabled {
+    color: var(--gray-4);
+    pointer-events: none;
+}
