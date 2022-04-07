@@ -3,8 +3,6 @@ class Character {
         this.x = Math.floor(options.gridWidth / 2);
         this.y = Math.floor(options.gridHeight / 2);
         this._rectangle = false;
-        console.log(this.x);
-        console.log(this.y);
     }
 
     draw() {
