@@ -118,9 +118,29 @@ body {
 
 #programme {
     align-self: stretch;
+    height: var(--size-13);
+    padding: var(--size-3) var(--size-5);
     border-width: var(--border-size-2);
     border-radius: var(--radius-2);
     border-color: var(--green-9);
     background-color: var(--green-0);
     font-family: var(--font-mono);
+    margin: var(--size-2);
+}
+
+#test {
+    font-size: var(--font-size-3);
+    background-color: var(--grape-9);
+    color: var(--yellow-1);
+    border: none;
+    padding: var(--size-2) var(--size-4);
+    border-radius: var(--radius-3);
+    align-self: center;
+}
+
+#game {
+    padding: var(--size-5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
