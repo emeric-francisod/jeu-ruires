@@ -25,9 +25,11 @@ class Map {
 
             for (let j = 0 - this.#gridHeight; j < this.#gridHeight * 2 + 1; j++) {
                 let yCacheIndex = '' + j;
-                this.#mapCache[xCacheIndex][yCacheIndex] = this.#getAltitude(i, j);
+                this.#mapCache[xCacheIndex][yCacheIndex] = this.#getTile(i, j);
             }
         }
+
+        console.log(this.#mapCache);
     }
 
     //Align the coordinates on the grid
@@ -40,8 +42,8 @@ class Map {
     }
 
     //Convert map coordinates to canvas coordinates
-    #convertToConvasCoordinate(mapCoordinate, mapOrigin) {
-        return mapCoordinate * this.#gridSize - mapOrigin;
+    #convertToConvasCoordinate(mapCoordinate) {
+        return mapCoordinate * this.#gridSize;
     }
 
     //Get the altitude of the bloc
@@ -58,6 +60,16 @@ class Map {
         return 0;
     }
 
+    // Creates a tile instance
+    #getTile(mapX, mapY) {
+        return new Tile(
+            this.#convertToConvasCoordinate(mapX),
+            this.#convertToConvasCoordinate(mapY),
+            this.#getAltitude(mapX, mapY),
+            this.#gridSize
+        );
+    }
+
     //Displays the map
     render(x, y) {
         const xNorm = this.#normilizeCoordinate(x);
@@ -65,11 +77,11 @@ class Map {
         const xGridStart = xNorm / this.#gridSize;
         const yGridStart = yNorm / this.#gridSize;
 
+        push();
+        translate(-x, -y);
+
         for (let i = xGridStart; i < xGridStart + this.#gridWidth + 1; i++) {
             for (let j = yGridStart; j < yGridStart + this.#gridHeight + 1; j++) {
-                let canvasX = this.#convertToConvasCoordinate(i, x);
-                let canvasY = this.#convertToConvasCoordinate(j, y);
-
                 let xCacheIndex = '' + i;
                 let yCacheIndex = '' + j;
 
@@ -78,20 +90,13 @@ class Map {
                 }
 
                 if (!this.#mapCache[xCacheIndex][yCacheIndex]) {
-                    this.#mapCache[xCacheIndex][yCacheIndex] = this.#getAltitude(i, j);
+                    this.#mapCache[xCacheIndex][yCacheIndex] = this.#getTile(i, j);
                 }
 
-                if (this.#mapCache[xCacheIndex][yCacheIndex] === 1) {
-                    fill(142, 132, 115);
-                } else if (this.#mapCache[xCacheIndex][yCacheIndex] === -1) {
-                    fill(5, 0, 158);
-                } else {
-                    fill(6, 183, 3);
-                }
-                noStroke();
-
-                rect(canvasX, canvasY, this.#gridSize);
+                this.#mapCache[xCacheIndex][yCacheIndex].render();
             }
         }
+
+        pop();
     }
 }

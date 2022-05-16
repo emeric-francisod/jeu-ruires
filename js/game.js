@@ -13,10 +13,14 @@ function setup() {
 
 function draw() {
     background(75);
+    move();
     map.render(x, y);
 }
 
-function keyPressed() {
+function move() {
+    if (!keyIsPressed) {
+        return false;
+    }
     switch (keyCode) {
         case LEFT_ARROW:
             x -= 5;
