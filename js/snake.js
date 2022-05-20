@@ -8,13 +8,22 @@ class Snake {
         this.calculateVelocity();
     }
 
+    get x() {
+        return this.position.x;
+    }
+
+    get y() {
+        return this.position.y;
+    }
+
     render() {
         push();
+        translate(this.x, this.y);
         rotate(-this.orientation);
         rectMode(CENTER);
         noStroke();
         fill(255, 0, 0);
-        rect(this.position.x, this.position.y, this.size.w, this.size.h);
+        rect(0, 0, this.size.w, this.size.h);
         pop();
     }
 
@@ -41,6 +50,6 @@ class Snake {
     calculateVelocity() {
         let vx = this.speed * Math.cos(this.orientation);
         let vy = this.speed * Math.sin(this.orientation);
-        this.velocity.set(vx, vy);
+        this.velocity.set(vx, -vy);
     }
 }

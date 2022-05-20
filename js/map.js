@@ -8,8 +8,17 @@ class Map {
     #canvasHeight;
     #gridWidth;
     #gridHeight;
+    #perlinOriginShift;
 
-    constructor(canvasWidth, canvasHeight, gridSize = 10, perlinZoom = 0.001, seaLevel = 0.5, mountainLevel = 0.7) {
+    constructor(
+        canvasWidth,
+        canvasHeight,
+        gridSize = 10,
+        perlinZoom = 0.001,
+        seaLevel = 0.3,
+        mountainLevel = 0.65,
+        perlinOriginShift = 1000000
+    ) {
         this.#gridSize = gridSize;
         this.#perlinZoom = perlinZoom;
         this.#seaLevel = seaLevel;
@@ -18,6 +27,7 @@ class Map {
         this.#canvasHeight = canvasHeight;
         this.#gridWidth = Math.ceil(this.#canvasWidth / this.#gridSize);
         this.#gridHeight = Math.ceil(this.#canvasHeight / this.#gridSize);
+        this.#perlinOriginShift = perlinOriginShift;
 
         for (let i = 0 - this.#gridWidth; i < this.#gridWidth * 2 + 1; i++) {
             let xCacheIndex = '' + i;
@@ -25,7 +35,7 @@ class Map {
 
             for (let j = 0 - this.#gridHeight; j < this.#gridHeight * 2 + 1; j++) {
                 let yCacheIndex = '' + j;
-                this.#mapCache[xCacheIndex][yCacheIndex] = this.#getTile(
+                this.#mapCache[xCacheIndex][yCacheIndex] = this.getTile(
                     createVector(i * this.#gridSize, j * this.#gridSize)
                 );
             }
@@ -43,7 +53,10 @@ class Map {
 
     //Get the altitude of the bloc
     #getAltitude(coordinateVector) {
-        let elevationNoise = noise(coordinateVector.x * this.#perlinZoom, coordinateVector.y * this.#perlinZoom);
+        let elevationNoise = noise(
+            (coordinateVector.x + this.#perlinOriginShift) * this.#perlinZoom,
+            (coordinateVector.y + this.#perlinOriginShift) * this.#perlinZoom
+        );
 
         if (elevationNoise < this.#seaLevel) {
             return -1;
@@ -57,7 +70,7 @@ class Map {
     }
 
     // Creates a tile instance
-    #getTile(coordinateVector) {
+    getTile(coordinateVector) {
         const altitude = this.#getAltitude(coordinateVector);
         switch (altitude) {
             case 1:
@@ -70,18 +83,15 @@ class Map {
     }
 
     //Displays the map around the point
-    render(coordinateVector) {
-        const startingPoint = createVector(
-            coordinateVector.x - this.#canvasWidth / 2,
-            coordinateVector.y - this.#canvasHeight / 2
-        );
+    render(x, y) {
+        const startingPoint = createVector(x - this.#canvasWidth / 2, y - this.#canvasHeight / 2);
         const gridStartingPoint = createVector(
             this.#normilizeCoordinate(startingPoint.x) / this.#gridSize,
             this.#normilizeCoordinate(startingPoint.y) / this.#gridSize
         );
 
-        for (let i = gridStartingPoint.x; i < gridStartingPoint.x + this.#gridWidth; i++) {
-            for (let j = gridStartingPoint.y; j < gridStartingPoint.y + this.#gridHeight; j++) {
+        for (let i = gridStartingPoint.x; i < gridStartingPoint.x + this.#gridWidth + 2; i++) {
+            for (let j = gridStartingPoint.y; j < gridStartingPoint.y + this.#gridHeight + 2; j++) {
                 const xCacheIndex = '' + i;
                 const yCacheIndex = '' + j;
 
@@ -90,7 +100,7 @@ class Map {
                 }
 
                 if (!this.#mapCache[xCacheIndex][yCacheIndex]) {
-                    this.#mapCache[xCacheIndex][yCacheIndex] = this.#getTile(
+                    this.#mapCache[xCacheIndex][yCacheIndex] = this.getTile(
                         createVector(i * this.#gridSize, j * this.#gridSize)
                     );
                 }
