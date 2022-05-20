@@ -23,4 +23,29 @@ class Tile {
 
         rect(this.#x, this.#y, this.#size);
     }
+
+    getCornersCoordinates() {
+        return [
+            {
+                x: this.#x,
+                y: this.#y,
+            },
+            {
+                x: this.#x + this.#size,
+                y: this.#y,
+            },
+            {
+                x: this.#x + this.#size,
+                y: this.#y + this.#size,
+            },
+            {
+                x: this.#x,
+                y: this.#y + this.#size,
+            },
+        ];
+    }
+
+    get orientation() {
+        return 0;
+    }
 }

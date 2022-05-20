@@ -28,8 +28,6 @@ class Map {
                 this.#mapCache[xCacheIndex][yCacheIndex] = this.#getTile(i, j);
             }
         }
-
-        console.log(this.#mapCache);
     }
 
     //Align the coordinates on the grid
@@ -98,5 +96,9 @@ class Map {
         }
 
         pop();
+    }
+
+    get gridSize() {
+        return this.#gridSize;
     }
 }
