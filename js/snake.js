@@ -1,7 +1,7 @@
 class Snake {
     constructor(x, y) {
         this.position = createVector(x, y);
-        this.size = { w: map.gridSize * 1.8, h: map.gridSize * 0.9 };
+        this.size = { w: gameMap.gridSize * 1.8, h: gameMap.gridSize * 0.9 };
         this.orientation = 0;
         this.speed = 5;
         this.velocity = createVector(0, 0);
@@ -22,7 +22,7 @@ class Snake {
         rotate(-this.orientation);
         rectMode(CENTER);
         noStroke();
-        fill(255, 0, 0);
+        fill(0, 100, 50);
         rect(0, 0, this.size.w, this.size.h);
         pop();
     }
