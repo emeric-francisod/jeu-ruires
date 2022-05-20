@@ -1,51 +1,46 @@
 class Tile {
-    #x;
-    #y;
-    #value;
-    #size;
+    constructor(x, y, size) {
+        this.coordinates = createVector(x, y);
+        this.size = size;
+    }
 
-    constructor(x, y, value, size) {
-        this.#x = x;
-        this.#y = y;
-        this.#value = value;
-        this.#size = size;
+    setColor() {
+        throw 'Cette méthode doit être implémentée.';
     }
 
     render() {
-        if (this.#value === 1) {
-            fill(142, 132, 115);
-        } else if (this.#value === -1) {
-            fill(5, 0, 158);
-        } else {
-            fill(6, 183, 3);
-        }
+        this.setColor();
         noStroke();
+        rect(this.coordinates.x, this.coordinates.y, this.size);
+    }
+}
 
-        rect(this.#x, this.#y, this.#size);
+class WaterTile extends Tile {
+    constructor(x, y, size) {
+        super(x, y, size);
     }
 
-    getCornersCoordinates() {
-        return [
-            {
-                x: this.#x,
-                y: this.#y,
-            },
-            {
-                x: this.#x + this.#size,
-                y: this.#y,
-            },
-            {
-                x: this.#x + this.#size,
-                y: this.#y + this.#size,
-            },
-            {
-                x: this.#x,
-                y: this.#y + this.#size,
-            },
-        ];
+    setColor() {
+        fill(5, 0, 158);
+    }
+}
+
+class GroundTile extends Tile {
+    constructor(x, y, size) {
+        super(x, y, size);
     }
 
-    get orientation() {
-        return 0;
+    setColor() {
+        fill(6, 183, 3);
+    }
+}
+
+class MountainTile extends Tile {
+    constructor(x, y, size) {
+        super(x, y, size);
+    }
+
+    setColor() {
+        fill(142, 132, 115);
     }
 }

@@ -25,7 +25,9 @@ class Map {
 
             for (let j = 0 - this.#gridHeight; j < this.#gridHeight * 2 + 1; j++) {
                 let yCacheIndex = '' + j;
-                this.#mapCache[xCacheIndex][yCacheIndex] = this.#getTile(i, j);
+                this.#mapCache[xCacheIndex][yCacheIndex] = this.#getTile(
+                    createVector(i * this.#gridSize, j * this.#gridSize)
+                );
             }
         }
     }
@@ -39,14 +41,10 @@ class Map {
         return coordinate - offset;
     }
 
-    //Convert map coordinates to canvas coordinates
-    #convertToConvasCoordinate(mapCoordinate) {
-        return mapCoordinate * this.#gridSize;
-    }
-
     //Get the altitude of the bloc
-    #getAltitude(mapX, mapY) {
-        let elevationNoise = noise(mapX * this.#gridSize * this.#perlinZoom, mapY * this.#gridSize * this.#perlinZoom);
+    #getAltitude(coordinateVector) {
+        let elevationNoise = noise(coordinateVector.x * this.#perlinZoom, coordinateVector.y * this.#perlinZoom);
+
         if (elevationNoise < this.#seaLevel) {
             return -1;
         }
@@ -59,43 +57,47 @@ class Map {
     }
 
     // Creates a tile instance
-    #getTile(mapX, mapY) {
-        return new Tile(
-            this.#convertToConvasCoordinate(mapX),
-            this.#convertToConvasCoordinate(mapY),
-            this.#getAltitude(mapX, mapY),
-            this.#gridSize
-        );
+    #getTile(coordinateVector) {
+        const altitude = this.#getAltitude(coordinateVector);
+        switch (altitude) {
+            case 1:
+                return new MountainTile(coordinateVector.x, coordinateVector.y, this.#gridSize);
+            case -1:
+                return new WaterTile(coordinateVector.x, coordinateVector.y, this.#gridSize);
+            default:
+                return new GroundTile(coordinateVector.x, coordinateVector.y, this.#gridSize);
+        }
     }
 
-    //Displays the map
-    render(x, y) {
-        const xNorm = this.#normilizeCoordinate(x);
-        const yNorm = this.#normilizeCoordinate(y);
-        const xGridStart = xNorm / this.#gridSize;
-        const yGridStart = yNorm / this.#gridSize;
+    //Displays the map around the point
+    render(coordinateVector) {
+        const startingPoint = createVector(
+            coordinateVector.x - this.#canvasWidth / 2,
+            coordinateVector.y - this.#canvasHeight / 2
+        );
+        const gridStartingPoint = createVector(
+            this.#normilizeCoordinate(startingPoint.x) / this.#gridSize,
+            this.#normilizeCoordinate(startingPoint.y) / this.#gridSize
+        );
 
-        push();
-        translate(-x, -y);
-
-        for (let i = xGridStart; i < xGridStart + this.#gridWidth + 1; i++) {
-            for (let j = yGridStart; j < yGridStart + this.#gridHeight + 1; j++) {
-                let xCacheIndex = '' + i;
-                let yCacheIndex = '' + j;
+        for (let i = gridStartingPoint.x; i < gridStartingPoint.x + this.#gridWidth; i++) {
+            for (let j = gridStartingPoint.y; j < gridStartingPoint.y + this.#gridHeight; j++) {
+                const xCacheIndex = '' + i;
+                const yCacheIndex = '' + j;
 
                 if (!this.#mapCache[xCacheIndex]) {
                     this.#mapCache[xCacheIndex] = {};
                 }
 
                 if (!this.#mapCache[xCacheIndex][yCacheIndex]) {
-                    this.#mapCache[xCacheIndex][yCacheIndex] = this.#getTile(i, j);
+                    this.#mapCache[xCacheIndex][yCacheIndex] = this.#getTile(
+                        createVector(i * this.#gridSize, j * this.#gridSize)
+                    );
                 }
 
                 this.#mapCache[xCacheIndex][yCacheIndex].render();
             }
         }
-
-        pop();
     }
 
     get gridSize() {
