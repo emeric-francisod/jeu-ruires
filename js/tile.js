@@ -1,7 +1,8 @@
 class Tile {
-    constructor(x, y, size) {
+    constructor(x, y, size, value) {
         this.coordinates = createVector(x, y);
         this.size = size;
+        this.value = value;
     }
 
     setColor() {
@@ -16,31 +17,31 @@ class Tile {
 }
 
 class WaterTile extends Tile {
-    constructor(x, y, size) {
-        super(x, y, size);
+    constructor(x, y, size, value) {
+        super(x, y, size, value);
     }
 
     setColor() {
-        fill(5, 0, 158);
+        fill(242, 100, 50 * this.value);
     }
 }
 
 class GroundTile extends Tile {
-    constructor(x, y, size) {
-        super(x, y, size);
+    constructor(x, y, size, value) {
+        super(x, y, size, value);
     }
 
     setColor() {
-        fill(6, 183, 3);
+        fill(119, 96.8, 36.5);
     }
 }
 
 class MountainTile extends Tile {
-    constructor(x, y, size) {
-        super(x, y, size);
+    constructor(x, y, size, value) {
+        super(x, y, size, value);
     }
 
     setColor() {
-        fill(142, 132, 115);
+        fill(38, 10.7, 50.4);
     }
 }

@@ -1,13 +1,14 @@
 const WIDTH = 500;
 const HEIGHT = 500;
 
-let map;
+let gameMap;
 let snake;
 
 function setup() {
     createCanvas(WIDTH, HEIGHT);
     frameRate(24);
-    map = new Map(WIDTH, HEIGHT);
+    colorMode(HSL);
+    gameMap = new Map(WIDTH, HEIGHT);
     snake = new Snake(0, 0);
 }
 
@@ -15,7 +16,7 @@ function draw() {
     background(75);
     move();
     translate(WIDTH / 2 - snake.x, HEIGHT / 2 - snake.y);
-    map.render(snake.x, snake.y);
+    gameMap.render(snake.x, snake.y);
     snake.render();
 }
 

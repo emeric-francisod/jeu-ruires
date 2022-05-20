@@ -53,33 +53,40 @@ class Map {
 
     //Get the altitude of the bloc
     #getAltitude(coordinateVector) {
-        let elevationNoise = noise(
+        return noise(
             (coordinateVector.x + this.#perlinOriginShift) * this.#perlinZoom,
             (coordinateVector.y + this.#perlinOriginShift) * this.#perlinZoom
         );
-
-        if (elevationNoise < this.#seaLevel) {
-            return -1;
-        }
-
-        if (elevationNoise > this.#mountainLevel) {
-            return 1;
-        }
-
-        return 0;
     }
 
     // Creates a tile instance
     getTile(coordinateVector) {
         const altitude = this.#getAltitude(coordinateVector);
-        switch (altitude) {
-            case 1:
-                return new MountainTile(coordinateVector.x, coordinateVector.y, this.#gridSize);
-            case -1:
-                return new WaterTile(coordinateVector.x, coordinateVector.y, this.#gridSize);
-            default:
-                return new GroundTile(coordinateVector.x, coordinateVector.y, this.#gridSize);
+
+        if (altitude < this.#seaLevel) {
+            return new WaterTile(
+                coordinateVector.x,
+                coordinateVector.y,
+                this.#gridSize,
+                map(altitude, 0, this.#seaLevel, 0, 1)
+            );
         }
+
+        if (altitude > this.#mountainLevel) {
+            return new MountainTile(
+                coordinateVector.x,
+                coordinateVector.y,
+                this.#gridSize,
+                map(altitude, this.#mountainLevel, 1, 0, 1)
+            );
+        }
+
+        return new GroundTile(
+            coordinateVector.x,
+            coordinateVector.y,
+            this.#gridSize,
+            map(altitude, this.#seaLevel, this.#mountainLevel, 0, 1)
+        );
     }
 
     //Displays the map around the point
