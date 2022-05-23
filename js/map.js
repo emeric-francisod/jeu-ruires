@@ -15,8 +15,8 @@ class Map {
         canvasHeight,
         gridSize = 10,
         perlinZoom = 0.001,
-        seaLevel = 0.33,
-        mountainLevel = 0.66,
+        seaLevel = 0.4,
+        mountainLevel = 0.6,
         perlinOriginShift = 1000000
     ) {
         this.#gridSize = gridSize;
@@ -35,7 +35,7 @@ class Map {
 
             for (let j = 0 - this.#gridHeight; j < this.#gridHeight * 2 + 1; j++) {
                 let yCacheIndex = '' + j;
-                this.#mapCache[xCacheIndex][yCacheIndex] = this.getTile(
+                this.#mapCache[xCacheIndex][yCacheIndex] = this.#createTile(
                     createVector(i * this.#gridSize, j * this.#gridSize)
                 );
             }
@@ -51,6 +51,14 @@ class Map {
         return coordinate - offset;
     }
 
+    //Find tile map coordinates
+    #findTileCoordinates(coordinate) {
+        return createVector(
+            this.#normilizeCoordinate(coordinate.x) / this.#gridSize,
+            this.#normilizeCoordinate(coordinate.y) / this.#gridSize
+        );
+    }
+
     //Get the altitude of the bloc
     #getAltitude(coordinateVector) {
         return noise(
@@ -60,7 +68,7 @@ class Map {
     }
 
     // Creates a tile instance
-    getTile(coordinateVector) {
+    #createTile(coordinateVector) {
         const altitude = this.#getAltitude(coordinateVector);
 
         if (altitude < this.#seaLevel) {
@@ -89,32 +97,61 @@ class Map {
         );
     }
 
+    #getTile(i, j) {
+        const xCacheIndex = '' + i;
+        const yCacheIndex = '' + j;
+
+        if (!this.#mapCache[xCacheIndex]) {
+            this.#mapCache[xCacheIndex] = {};
+        }
+
+        if (!this.#mapCache[xCacheIndex][yCacheIndex]) {
+            this.#mapCache[xCacheIndex][yCacheIndex] = this.#createTile(
+                createVector(i * this.#gridSize, j * this.#gridSize)
+            );
+        }
+
+        return this.#mapCache[xCacheIndex][yCacheIndex];
+    }
+
     //Displays the map around the point
     render(x, y) {
         const startingPoint = createVector(x - this.#canvasWidth / 2, y - this.#canvasHeight / 2);
-        const gridStartingPoint = createVector(
-            this.#normilizeCoordinate(startingPoint.x) / this.#gridSize,
-            this.#normilizeCoordinate(startingPoint.y) / this.#gridSize
-        );
+        const gridStartingPoint = this.#findTileCoordinates(startingPoint);
 
         for (let i = gridStartingPoint.x; i < gridStartingPoint.x + this.#gridWidth + 2; i++) {
             for (let j = gridStartingPoint.y; j < gridStartingPoint.y + this.#gridHeight + 2; j++) {
-                const xCacheIndex = '' + i;
-                const yCacheIndex = '' + j;
-
-                if (!this.#mapCache[xCacheIndex]) {
-                    this.#mapCache[xCacheIndex] = {};
-                }
-
-                if (!this.#mapCache[xCacheIndex][yCacheIndex]) {
-                    this.#mapCache[xCacheIndex][yCacheIndex] = this.getTile(
-                        createVector(i * this.#gridSize, j * this.#gridSize)
-                    );
-                }
-
-                this.#mapCache[xCacheIndex][yCacheIndex].render();
+                this.#getTile(i, j).render();
             }
         }
+    }
+
+    findSpawnPoint(x = 0, y = 0) {
+        let currentTileCoordinates = this.#findTileCoordinates(createVector(x, y));
+        let currentTile = this.#getTile(currentTileCoordinates.x, currentTileCoordinates.y);
+        let searchDepth = 0;
+
+        while (!(currentTile instanceof GroundTile)) {
+            if (currentTileCoordinates.y === searchDepth) {
+                if (currentTileCoordinates.x === searchDepth) {
+                    searchDepth++;
+                }
+                currentTileCoordinates.x++;
+            } else if (currentTileCoordinates.x === -searchDepth) {
+                currentTileCoordinates.y++;
+            } else if (currentTileCoordinates.y === -searchDepth) {
+                currentTileCoordinates.x--;
+            } else if (currentTileCoordinates.x === searchDepth) {
+                currentTileCoordinates.y--;
+            }
+
+            currentTile = this.#getTile(currentTileCoordinates.x, currentTileCoordinates.y);
+        }
+
+        return createVector(
+            currentTile.coordinates.x + this.#gridSize / 2,
+            currentTile.coordinates.y + this.#gridSize / 2
+        );
     }
 
     get gridSize() {

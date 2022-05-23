@@ -9,7 +9,9 @@ function setup() {
     frameRate(24);
     colorMode(HSB);
     gameMap = new Map(WIDTH, HEIGHT);
-    snake = new Snake(0, 0);
+    let spawnPoint = gameMap.findSpawnPoint();
+    console.log(spawnPoint.x, spawnPoint.y);
+    snake = new Snake(spawnPoint.x, spawnPoint.y);
 }
 
 function draw() {
