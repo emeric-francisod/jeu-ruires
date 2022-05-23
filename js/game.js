@@ -5,19 +5,44 @@ let gameMap;
 let snake;
 
 function setup() {
-    createCanvas(WIDTH, HEIGHT);
+    createCanvas(WIDTH, HEIGHT, 10, 0.001, 0.6, 0.7);
     frameRate(24);
     colorMode(HSB);
     gameMap = new Map(WIDTH, HEIGHT);
     let spawnPoint = gameMap.findSpawnPoint();
-    console.log(spawnPoint.x, spawnPoint.y);
     snake = new Snake(spawnPoint.x, spawnPoint.y);
 }
 
 function draw() {
-    background(75);
-    move();
+    if (snake.isCaptured()) {
+        renderGame();
+        displayFailMessage();
+    } else {
+        background(75);
+        move();
+        renderGame();
+    }
+}
+
+function displayFailMessage() {
+    background(290, 95, 5, 0.7);
+    fill(295, 10, 95);
+    textAlign(CENTER, BOTTOM);
+    textSize(100);
+    textStyle(BOLD);
+    text('Perdu!', snake.x, snake.y);
+    textSize(25);
+    textStyle(BOLD);
+    textAlign(CENTER, TOP);
+    text(snake.stateMessage, snake.x, snake.y);
+}
+
+function centerOnSnake() {
     translate(WIDTH / 2 - snake.x, HEIGHT / 2 - snake.y);
+}
+
+function renderGame() {
+    centerOnSnake();
     gameMap.render(snake.x, snake.y);
     snake.render();
 }
@@ -36,36 +61,16 @@ function move() {
     snake.rotate(angle);
     snake.moveForward();
 }
-/*
-function collisions(firstObject, secondObject) {
-    let referenceCorners = firstObject.getCornersCoordinates();
-    let secondCorners = rotateAxis(
-        secondObject.getCornersCoordinates(),
-        firstObject.orientation - secondObject.orientation
-    );
 
-    for (let i = 0; i < secondCorners.length; i++) {
-        if (
-            secondCorners[i].x >= referenceCorners[0].x &&
-            secondCorners[i].x <= referenceCorners[1].x &&
-            secondCorners[i].y <= referenceCorners[3].y &&
-            secondCorners[i].y >= referenceCorners[0].y
-        ) {
-            return true;
-        }
+function entityTileCollision(entityX, entityY, tileX, tileY) {
+    if (
+        entityX >= tileX &&
+        entityX <= tileX + gameMap.gridSize &&
+        entityY >= tileY &&
+        entityY <= tileY + gameMap.gridSize
+    ) {
+        return true;
     }
 
-    return collisions(secondObject, firstObject);
+    return false;
 }
-
-function rotateAxis(points = [], angle) {
-    let rotatedCoordinates = [];
-    for (let i = 0; i < points.length; i++) {
-        rotatedCoordinates.push({
-            x: points[i].x * Math.cos(angle) + points[i].y * Math.sin(angle),
-            y: points[i].y * Math.cos(angle) - points[i].x * Math.sin(angle),
-        });
-    }
-    return rotatedCoordinates;
-}
- */

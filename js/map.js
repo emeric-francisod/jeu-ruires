@@ -126,6 +126,11 @@ class Map {
         }
     }
 
+    getCurrentTile(x, y) {
+        let currentTileCoordinates = this.#findTileCoordinates(createVector(x, y));
+        return this.#getTile(currentTileCoordinates.x, currentTileCoordinates.y);
+    }
+
     findSpawnPoint(x = 0, y = 0) {
         let currentTileCoordinates = this.#findTileCoordinates(createVector(x, y));
         let currentTile = this.#getTile(currentTileCoordinates.x, currentTileCoordinates.y);
