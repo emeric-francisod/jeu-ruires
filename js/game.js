@@ -1,16 +1,21 @@
 const WIDTH = 500;
 const HEIGHT = 500;
+const TICK_SPEED = 24;
+
+let snakeSettings = {
+    maxEnergy: 100,
+};
 
 let gameMap;
 let snake;
 
 function setup() {
     createCanvas(WIDTH, HEIGHT, 10, 0.001, 0.6, 0.7);
-    frameRate(24);
+    frameRate(TICK_SPEED);
     colorMode(HSB);
     gameMap = new Map(WIDTH, HEIGHT);
     let spawnPoint = gameMap.findSpawnPoint();
-    snake = new Snake(spawnPoint.x, spawnPoint.y);
+    snake = new Snake(spawnPoint.x, spawnPoint.y, snakeSettings);
 }
 
 function draw() {
@@ -21,6 +26,7 @@ function draw() {
         background(75);
         move();
         renderGame();
+        renderGameUI();
     }
 }
 
@@ -41,10 +47,39 @@ function centerOnSnake() {
     translate(WIDTH / 2 - snake.x, HEIGHT / 2 - snake.y);
 }
 
+function resetCoordinates() {
+    resetMatrix();
+}
+
 function renderGame() {
     centerOnSnake();
     gameMap.render(snake.x, snake.y);
     snake.render();
+}
+
+function renderEnergyBar() {
+    const barMaxWidth = 100;
+    const barWidth = (snake.energy * barMaxWidth) / snake.maxEnergy;
+    const barHeight = 15;
+    const borderWeight = 3;
+    const barMargin = {
+        horizontal: 20,
+        vertical: 15,
+    };
+
+    fill(0, 98, 91);
+    noStroke();
+    rect(barMargin.horizontal, barMargin.vertical, barWidth, barHeight);
+
+    stroke(120, 10, 91);
+    strokeWeight(borderWeight);
+    noFill();
+    rect(barMargin.horizontal, barMargin.vertical, barMaxWidth, barHeight);
+}
+
+function renderGameUI() {
+    resetCoordinates();
+    renderEnergyBar();
 }
 
 function move() {

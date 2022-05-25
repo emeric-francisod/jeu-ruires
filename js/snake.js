@@ -1,5 +1,5 @@
 class Snake {
-    constructor(x, y) {
+    constructor(x, y, settings) {
         this.position = createVector(x, y);
         this.size = { w: gameMap.gridSize * 1.8, h: gameMap.gridSize * 0.9 };
         this.orientation = 0;
@@ -8,6 +8,9 @@ class Snake {
         this.calculateVelocity();
         this.state = 'alive';
         this.stateMessage = '';
+
+        this.maxEnergy = settings.maxEnergy;
+        this.energy = this.maxEnergy;
     }
 
     get x() {
