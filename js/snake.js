@@ -11,6 +11,7 @@ class Snake {
 
         this.maxEnergy = settings.maxEnergy;
         this.energy = this.maxEnergy;
+        this.energyDepletionRate = settings.energyDepletionRate;
     }
 
     get x() {
@@ -81,6 +82,13 @@ class Snake {
 
     isCaptured() {
         return this.state === 'captured';
+    }
+
+    looseEnergy() {
+        this.energy -= this.maxEnergy / (this.energyDepletionRate * TICK_SPEED);
+        if (this.energy <= 0) {
+            this.captured("Tu n'as pas la force de continuer. Pense à manger des pommes, c'est bon les pommes");
+        }
     }
 
     get stateMessage() {

@@ -4,6 +4,7 @@ const TICK_SPEED = 24;
 
 let snakeSettings = {
     maxEnergy: 100,
+    energyDepletionRate: 10,
 };
 
 let gameMap;
@@ -25,6 +26,7 @@ function draw() {
     } else {
         background(75);
         move();
+        snake.looseEnergy();
         renderGame();
         renderGameUI();
     }
@@ -40,7 +42,8 @@ function displayFailMessage() {
     textSize(25);
     textStyle(BOLD);
     textAlign(CENTER, TOP);
-    text(snake.stateMessage, snake.x, snake.y);
+    rectMode(CENTER);
+    text(snake.stateMessage, snake.x, snake.y, WIDTH * 0.9);
 }
 
 function centerOnSnake() {
