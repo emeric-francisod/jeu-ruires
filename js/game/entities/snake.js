@@ -1,7 +1,6 @@
-class Snake {
+class Snake extends Entity {
     constructor(x, y, settings) {
-        this.position = createVector(x, y);
-        this.size = { w: gameMap.gridSize * 1.8, h: gameMap.gridSize * 0.9 };
+        super(x, y, gameMap.gridSize * 1.8, gameMap.gridSize * 0.9);
         this.orientation = 0;
         this.speed = 5;
         this.velocity = createVector(0, 0);
@@ -14,14 +13,6 @@ class Snake {
         this.energyDepletionRate = settings.energyDepletionRate;
     }
 
-    get x() {
-        return this.position.x;
-    }
-
-    get y() {
-        return this.position.y;
-    }
-
     render() {
         push();
         translate(this.x, this.y);
@@ -29,7 +20,7 @@ class Snake {
         rectMode(CENTER);
         noStroke();
         fill(0, 100, 50);
-        rect(0, 0, this.size.w, this.size.h);
+        rect(0, 0, this.size.width, this.size.height);
         pop();
     }
 

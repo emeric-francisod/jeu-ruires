@@ -153,10 +153,7 @@ class Map {
             currentTile = this.#getTile(currentTileCoordinates.x, currentTileCoordinates.y);
         }
 
-        return createVector(
-            currentTile.coordinates.x + this.#gridSize / 2,
-            currentTile.coordinates.y + this.#gridSize / 2
-        );
+        return createVector(currentTile.position.x + this.#gridSize / 2, currentTile.position.y + this.#gridSize / 2);
     }
 
     get gridSize() {

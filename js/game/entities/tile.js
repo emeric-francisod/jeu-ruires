@@ -1,7 +1,6 @@
-class Tile {
+class Tile extends Entity {
     constructor(x, y, size, value) {
-        this.coordinates = createVector(x, y);
-        this.size = size;
+        super(x, y, size, size);
         this.value = value;
         this.colorParameters = {
             hue: [0, 360, 0],
@@ -23,7 +22,7 @@ class Tile {
     render() {
         fill(this.color);
         noStroke();
-        rect(this.coordinates.x, this.coordinates.y, this.size);
+        rect(this.position.x, this.position.y, this.size.width);
     }
 }
 
