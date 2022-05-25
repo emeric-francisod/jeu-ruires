@@ -33,6 +33,7 @@ function setup() {
     createCanvas(SETTINGS.width, SETTINGS.height);
     frameRate(SETTINGS.tickSpeed);
     colorMode(HSB);
+
     gameMap = new Map(SETTINGS.width, SETTINGS.height, mapSettings);
     let spawnPoint = gameMap.findSpawnPoint();
     snake = new Snake(spawnPoint.x, spawnPoint.y, snakeSettings);
@@ -71,6 +72,7 @@ function centerOnSnake() {
 
 function resetCoordinates() {
     resetMatrix();
+    rectMode(CORNER);
 }
 
 function renderGame() {
