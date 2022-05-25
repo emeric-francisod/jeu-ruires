@@ -13,11 +13,7 @@ class Map {
     constructor(
         canvasWidth,
         canvasHeight,
-        gridSize = 10,
-        perlinZoom = 0.001,
-        seaLevel = 0.4,
-        mountainLevel = 0.6,
-        perlinOriginShift = 1000000
+        { gridSize = 10, perlinZoom = 0.001, seaLevel = 0.4, mountainLevel = 0.6, perlinOriginShift = 1000000 }
     ) {
         this.#gridSize = gridSize;
         this.#perlinZoom = perlinZoom;

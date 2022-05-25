@@ -1,20 +1,39 @@
-const WIDTH = 500;
-const HEIGHT = 500;
-const TICK_SPEED = 24;
+const SETTINGS = {
+    width: 500,
+    height: 500,
+    tickSpeed: 24,
+    gridSize: 10,
+};
 
 let snakeSettings = {
     maxEnergy: 100,
     energyDepletionRate: 10,
+    width: 1.8 * SETTINGS.gridSize,
+    height: 0.9 * SETTINGS.gridSize,
 };
 
+const mapSettings = {
+    gridSize: SETTINGS.gridSize,
+    perlinZoom: 0.001,
+    seaLevel: 0.4,
+    mountainLevel: 0.6,
+    perlinOriginShift: 1000000,
+};
+
+/**
+ * @type {Map}
+ */
 let gameMap;
+/**
+ * @type {Snake}
+ */
 let snake;
 
 function setup() {
-    createCanvas(WIDTH, HEIGHT, 10, 0.001, 0.6, 0.7);
-    frameRate(TICK_SPEED);
+    createCanvas(SETTINGS.width, SETTINGS.height);
+    frameRate(SETTINGS.tickSpeed);
     colorMode(HSB);
-    gameMap = new Map(WIDTH, HEIGHT);
+    gameMap = new Map(SETTINGS.width, SETTINGS.height, mapSettings);
     let spawnPoint = gameMap.findSpawnPoint();
     snake = new Snake(spawnPoint.x, spawnPoint.y, snakeSettings);
 }
@@ -43,11 +62,11 @@ function displayFailMessage() {
     textStyle(BOLD);
     textAlign(CENTER, TOP);
     rectMode(CENTER);
-    text(snake.stateMessage, snake.x, snake.y, WIDTH * 0.9);
+    text(snake.stateMessage, snake.x, snake.y, SETTINGS.width * 0.9);
 }
 
 function centerOnSnake() {
-    translate(WIDTH / 2 - snake.x, HEIGHT / 2 - snake.y);
+    translate(SETTINGS.width / 2 - snake.x, SETTINGS.height / 2 - snake.y);
 }
 
 function resetCoordinates() {
@@ -86,8 +105,8 @@ function renderGameUI() {
 }
 
 function move() {
-    centerMouseX = mouseX - WIDTH / 2;
-    centerMouseY = HEIGHT / 2 - mouseY;
+    centerMouseX = mouseX - SETTINGS.width / 2;
+    centerMouseY = SETTINGS.height / 2 - mouseY;
 
     let angle = Math.atan(centerMouseY / centerMouseX);
     if (centerMouseX < 0) {

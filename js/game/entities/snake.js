@@ -1,6 +1,6 @@
 class Snake extends Entity {
     constructor(x, y, settings) {
-        super(x, y, gameMap.gridSize * 1.8, gameMap.gridSize * 0.9);
+        super(x, y, settings.width, settings.height);
         this.orientation = 0;
         this.speed = 5;
         this.velocity = createVector(0, 0);
@@ -76,7 +76,7 @@ class Snake extends Entity {
     }
 
     looseEnergy() {
-        this.energy -= this.maxEnergy / (this.energyDepletionRate * TICK_SPEED);
+        this.energy -= this.maxEnergy / (this.energyDepletionRate * SETTINGS.tickSpeed);
         if (this.energy <= 0) {
             this.captured("Tu n'as pas la force de continuer. Pense à manger des pommes, c'est bon les pommes");
         }
