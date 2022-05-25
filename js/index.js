@@ -28,6 +28,10 @@ let gameMap;
  * @type {Snake}
  */
 let snake;
+/**
+ * @type {GUI}
+ */
+let inGameGui;
 
 function setup() {
     createCanvas(SETTINGS.width, SETTINGS.height);
@@ -37,6 +41,9 @@ function setup() {
     gameMap = new Map(SETTINGS.width, SETTINGS.height, mapSettings);
     let spawnPoint = gameMap.findSpawnPoint();
     snake = new Snake(spawnPoint.x, spawnPoint.y, snakeSettings);
+
+    inGameGui = new GUI();
+    inGameGui.addComponent(new HealthBar(snakeSettings.maxEnergy), 'health');
 }
 
 function draw() {
@@ -68,6 +75,7 @@ function displayFailMessage() {
 
 function centerOnSnake() {
     translate(SETTINGS.width / 2 - snake.x, SETTINGS.height / 2 - snake.y);
+    rectMode(CENTER);
 }
 
 function resetCoordinates() {
@@ -81,29 +89,10 @@ function renderGame() {
     snake.render();
 }
 
-function renderEnergyBar() {
-    const barMaxWidth = 100;
-    const barWidth = (snake.energy * barMaxWidth) / snake.maxEnergy;
-    const barHeight = 15;
-    const borderWeight = 3;
-    const barMargin = {
-        horizontal: 20,
-        vertical: 15,
-    };
-
-    fill(0, 98, 91);
-    noStroke();
-    rect(barMargin.horizontal, barMargin.vertical, barWidth, barHeight);
-
-    stroke(120, 10, 91);
-    strokeWeight(borderWeight);
-    noFill();
-    rect(barMargin.horizontal, barMargin.vertical, barMaxWidth, barHeight);
-}
-
 function renderGameUI() {
     resetCoordinates();
-    renderEnergyBar();
+    inGameGui.components.health.updateValue(snake.energy);
+    inGameGui.render();
 }
 
 function move() {
@@ -119,17 +108,4 @@ function move() {
 
     snake.rotate(angle);
     snake.moveForward();
-}
-
-function entityTileCollision(entityX, entityY, tileX, tileY) {
-    if (
-        entityX >= tileX &&
-        entityX <= tileX + gameMap.gridSize &&
-        entityY >= tileY &&
-        entityY <= tileY + gameMap.gridSize
-    ) {
-        return true;
-    }
-
-    return false;
 }

@@ -22,7 +22,6 @@ class Tile extends Entity {
     render() {
         fill(this.color);
         noStroke();
-        rectMode(CENTER);
         rect(this.position.x, this.position.y, this.size.width);
     }
 }

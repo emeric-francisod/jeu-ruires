@@ -17,7 +17,6 @@ class Snake extends Entity {
         push();
         translate(this.x, this.y);
         rotate(-this.orientation);
-        rectMode(CENTER);
         noStroke();
         fill(0, 100, 50);
         rect(0, 0, this.size.width, this.size.height);
