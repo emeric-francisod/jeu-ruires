@@ -16,7 +16,7 @@ const snakeSettings = {
 const mapSettings = {
     gridSize: SETTINGS.gridSize,
     perlinZoom: 0.001,
-    seaLevel: 0.4,
+    seaLevel: 0.5,
     mountainLevel: 0.6,
     perlinOriginShift: 1000000,
 };
@@ -31,11 +31,14 @@ let actionnedKeys = {
 
 function setup() {
     createCanvas(SETTINGS.width, SETTINGS.height);
+    console.log('start');
     frameRate(SETTINGS.tickSpeed);
     colorMode(HSB);
-
-    gameMap = new Map(SETTINGS.width, SETTINGS.height, mapSettings);
-    let spawnPoint = gameMap.findSpawnPoint();
+    let spawnPoint = false;
+    do {
+        gameMap = new Map(SETTINGS.width, SETTINGS.height, mapSettings);
+        spawnPoint = gameMap.findSpawnPoint();
+    } while (!spawnPoint);
     snake = new Snake(spawnPoint.x, spawnPoint.y, snakeSettings);
 
     guis.inGameGui = new GUI();

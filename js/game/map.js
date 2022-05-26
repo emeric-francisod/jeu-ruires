@@ -133,28 +133,45 @@ class Map {
         return this.getTile(currentTileCoordinates.x, currentTileCoordinates.y);
     }
 
-    findSpawnPoint(x = 0, y = 0) {
+    findSpawnPoint(x = 0, y = 0, minDepth = 0, maxDepth = 10000, randomAngle = false) {
         let currentTileCoordinates = this.findTileCoordinates(createVector(x, y));
-        let currentTile = this.getTile(currentTileCoordinates.x, currentTileCoordinates.y);
-        let searchDepth = 0;
+        let depth = minDepth;
+        let testedTile = {};
+        let initialTheta = randomAngle ? random(0, TWO_PI) : 0;
 
-        while (!(currentTile instanceof GroundTile)) {
-            if (currentTileCoordinates.y === searchDepth) {
-                if (currentTileCoordinates.x === searchDepth) {
-                    searchDepth++;
+        while (depth < maxDepth) {
+            let theta = 0;
+            if (depth === minDepth) {
+                theta = initialTheta;
+            }
+            let radius = depth * this.grid.size;
+            let deltaTheta = Math.atan(this.grid.size / radius) * 2;
+
+            while (theta < TWO_PI) {
+                let testX = radius * Math.cos(theta) + currentTileCoordinates.x;
+                let testY = radius * Math.sin(theta) + currentTileCoordinates.y;
+                let testTileCoordinates = this.findTileCoordinates(createVector(testX, testY));
+
+                let testXIndex = testTileCoordinates.x + '';
+                let testYIndex = testTileCoordinates.y + '';
+
+                if (testedTile[testXIndex] === undefined) {
+                    testedTile[testXIndex] = {};
                 }
-                currentTileCoordinates.x++;
-            } else if (currentTileCoordinates.x === -searchDepth) {
-                currentTileCoordinates.y++;
-            } else if (currentTileCoordinates.y === -searchDepth) {
-                currentTileCoordinates.x--;
-            } else if (currentTileCoordinates.x === searchDepth) {
-                currentTileCoordinates.y--;
+                if (testedTile[testXIndex][testYIndex] === undefined) {
+                    testedTile[testXIndex][testYIndex] = true;
+                    let testTile = this.getTile(testTileCoordinates.x, testTileCoordinates.y);
+                    if (testTile instanceof GroundTile) {
+                        return createVector(testTile.position.x, testTile.position.y);
+                    }
+                }
+
+                theta += deltaTheta;
             }
 
-            currentTile = this.getTile(currentTileCoordinates.x, currentTileCoordinates.y);
+            depth++;
         }
 
-        return createVector(currentTile.position.x, currentTile.position.y);
+        return false;
     }
 }
