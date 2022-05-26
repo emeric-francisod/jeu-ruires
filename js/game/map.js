@@ -85,6 +85,9 @@ class Map {
         if (offset < 0) {
             offset = this.grid.size + offset;
         }
+        if (offset > this.grid.size / 2) {
+            return coordinate + this.grid.size - offset;
+        }
         return coordinate - offset;
     }
 

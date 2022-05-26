@@ -28,8 +28,8 @@ class Snake extends Entity {
         rotate(-this.orientation);
         noStroke();
         fill(0, 100, 50);
-        //rect(0, 0, this.size.width, this.size.height);
-        circle(0, 0, 3);
+        rect(0, 0, this.size.width, this.size.height);
+        //circle(0, 0, 3);
         pop();
     }
 
