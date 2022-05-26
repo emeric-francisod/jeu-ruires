@@ -66,7 +66,7 @@ class Snake extends Entity {
     looseEnergy() {
         this.energy -= this.maxEnergy / (this.energyDepletionRate * SETTINGS.tickSpeed);
         if (this.energy <= 0) {
-            this.captured("Tu n'as pas la force de continuer. Pense à manger des pommes, c'est bon les pommes");
+            this.captured("Tu n'as pas la force de continuer. Pense à manger des pommes, c'est bon les pommes.");
         }
     }
 

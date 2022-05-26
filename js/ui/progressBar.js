@@ -1,7 +1,13 @@
-class ProgressBar {
-    constructor(max) {
+class ProgressBar extends GuiComponent {
+    constructor(x, y, w, h, max) {
+        super(x, y);
         this.maxValue = max;
         this.value = max;
+
+        this.size = {
+            width: w,
+            height: h,
+        };
     }
 
     updateValue(value) {
@@ -10,31 +16,25 @@ class ProgressBar {
 }
 
 class HealthBar extends ProgressBar {
-    constructor(max) {
-        super(max);
+    constructor(x, y, w, h, max) {
+        super(x, y, w, h, max);
         this.design = {
-            width: 100,
-            height: 15,
             borderWeight: 3,
-            margin: {
-                top: 15,
-                left: 20,
-            },
             borderColor: color(120, 10, 91),
             barColor: color(0, 98, 91),
         };
     }
 
     render() {
-        const barWidth = (this.value * this.design.width) / this.maxValue;
+        const barWidth = (this.value * this.size.width) / this.maxValue;
 
         fill(this.design.barColor);
         noStroke();
-        rect(this.design.margin.left, this.design.margin.top, barWidth, this.design.height);
+        rect(this.position.x, this.position.y, barWidth, this.size.height);
 
         noFill();
         stroke(this.design.borderColor);
         strokeWeight(this.design.borderWeight);
-        rect(this.design.margin.left, this.design.margin.top, this.design.width, this.design.height);
+        rect(this.position.x, this.position.y, this.size.width, this.size.height);
     }
 }

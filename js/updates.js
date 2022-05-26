@@ -1,3 +1,8 @@
+function updateCharacters() {
+    moveCharacters();
+    snake.looseEnergy();
+}
+
 function moveCharacters() {
     characterRotationControl();
 
@@ -42,4 +47,8 @@ function checkTileCollisions(character) {
     }
 
     return true;
+}
+
+function updateGameGUI() {
+    guis.inGameGui.components.health.updateValue(snake.energy);
 }

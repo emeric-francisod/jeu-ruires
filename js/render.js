@@ -30,6 +30,10 @@ function renderGame() {
 
 function renderGameUI() {
     resetCoordinates();
-    inGameGui.components.health.updateValue(snake.energy);
-    inGameGui.render();
+    guis.inGameGui.render();
+}
+
+function renderFailMessage() {
+    resetCoordinates();
+    guis.failMessage.render();
 }

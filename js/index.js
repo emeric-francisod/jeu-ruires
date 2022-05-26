@@ -6,9 +6,9 @@ const SETTINGS = {
     calculationPrecision: 0.01,
 };
 
-let snakeSettings = {
+const snakeSettings = {
     maxEnergy: 100,
-    energyDepletionRate: 60,
+    energyDepletionRate: 5,
     width: 1.8 * SETTINGS.gridSize,
     height: 0.9 * SETTINGS.gridSize,
 };
@@ -23,7 +23,7 @@ const mapSettings = {
 
 let gameMap;
 let snake;
-let inGameGui;
+let guis = {};
 
 let actionnedKeys = {
     space: false,
@@ -38,18 +38,51 @@ function setup() {
     let spawnPoint = gameMap.findSpawnPoint();
     snake = new Snake(spawnPoint.x, spawnPoint.y, snakeSettings);
 
-    inGameGui = new GUI();
-    inGameGui.addComponent(new HealthBar(snakeSettings.maxEnergy), 'health');
+    guis.inGameGui = new GUI();
+    guis.inGameGui.addComponent(new HealthBar(20, 15, 100, 15, snakeSettings.maxEnergy), 'health');
+
+    let failMessageBackgroundColor = color(290, 95, 5, 0.7);
+    guis.failMessage = new GUI(failMessageBackgroundColor);
+    guis.failMessage.addComponent(
+        new Message(
+            SETTINGS.width / 2,
+            SETTINGS.height / 2,
+            'Perdu!',
+            100,
+            color(295, 10, 95),
+            'bottom',
+            'center',
+            true,
+            SETTINGS.width * 0.9
+        ),
+        'title'
+    );
+    guis.failMessage.addComponent(
+        new Message(
+            SETTINGS.width / 2,
+            SETTINGS.height / 2,
+            'Placeholder',
+            25,
+            color(295, 10, 95),
+            'top',
+            'center',
+            true,
+            SETTINGS.width * 0.9
+        ),
+        'message'
+    );
 }
 
 function draw() {
     if (snake.isCaptured()) {
         renderGame();
-        displayFailMessage();
+        guis.failMessage.components.message.setMessage(snake.stateMessage);
+        renderFailMessage();
+        //displayFailMessage();
     } else {
         background(75);
-        moveCharacters();
-        snake.looseEnergy();
+        updateCharacters();
+        updateGameGUI();
         renderGame();
         renderGameUI();
     }
