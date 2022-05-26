@@ -48,7 +48,3 @@ function checkTileCollisions(character) {
 
     return true;
 }
-
-function updateGameGUI() {
-    guis.inGameGui.components.health.updateValue(snake.energy);
-}

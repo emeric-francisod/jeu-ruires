@@ -76,7 +76,7 @@ function setup() {
 function draw() {
     if (snake.isCaptured()) {
         renderGame();
-        guis.failMessage.components.message.setMessage(snake.stateMessage);
+        updateFailMessageGUI();
         renderFailMessage();
         //displayFailMessage();
     } else {
