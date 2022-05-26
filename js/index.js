@@ -20,18 +20,13 @@ const mapSettings = {
     perlinOriginShift: 1000000,
 };
 
-/**
- * @type {Map}
- */
 let gameMap;
-/**
- * @type {Snake}
- */
 let snake;
-/**
- * @type {GUI}
- */
 let inGameGui;
+
+let actionnedKeys = {
+    space: false,
+};
 
 function setup() {
     createCanvas(SETTINGS.width, SETTINGS.height);
@@ -59,53 +54,12 @@ function draw() {
     }
 }
 
-function displayFailMessage() {
-    background(290, 95, 5, 0.7);
-    fill(295, 10, 95);
-    textAlign(CENTER, BOTTOM);
-    textSize(100);
-    textStyle(BOLD);
-    text('Perdu!', snake.x, snake.y);
-    textSize(25);
-    textStyle(BOLD);
-    textAlign(CENTER, TOP);
-    rectMode(CENTER);
-    text(snake.stateMessage, snake.x, snake.y, SETTINGS.width * 0.9);
+function keyPressed() {
+    actionnedKeys.space = key === ' ';
+    return false;
 }
 
-function centerOnSnake() {
-    translate(SETTINGS.width / 2 - snake.x, SETTINGS.height / 2 - snake.y);
-    rectMode(CENTER);
-}
-
-function resetCoordinates() {
-    resetMatrix();
-    rectMode(CORNER);
-}
-
-function renderGame() {
-    centerOnSnake();
-    gameMap.render(snake.x, snake.y);
-    snake.render();
-}
-
-function renderGameUI() {
-    resetCoordinates();
-    inGameGui.components.health.updateValue(snake.energy);
-    inGameGui.render();
-}
-
-function move() {
-    centerMouseX = mouseX - SETTINGS.width / 2;
-    centerMouseY = SETTINGS.height / 2 - mouseY;
-
-    let angle = Math.atan(centerMouseY / centerMouseX);
-    if (centerMouseX < 0) {
-        angle += Math.PI;
-    } else if (centerMouseY < 0) {
-        angle += Math.PI * 2;
-    }
-
-    snake.rotate(angle);
-    snake.moveForward();
+function keyReleased() {
+    actionnedKeys.space = !key === ' ';
+    return false;
 }
