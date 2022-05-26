@@ -3,6 +3,7 @@ const SETTINGS = {
     height: 500,
     tickSpeed: 24,
     gridSize: 10,
+    calculationPrecision: 0.01,
 };
 
 let snakeSettings = {

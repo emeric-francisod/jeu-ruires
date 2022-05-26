@@ -1,6 +1,7 @@
 class Snake extends Entity {
     constructor(x, y, settings) {
         super(x, y, settings.width, settings.height);
+        this.nextPosition = createVector(x, y);
         this.orientation = 0;
         this.speed = 5;
         this.velocity = createVector(0, 0);
@@ -13,6 +14,14 @@ class Snake extends Entity {
         this.energyDepletionRate = settings.energyDepletionRate;
     }
 
+    get nextX() {
+        return this.nextPosition.x;
+    }
+
+    get nextY() {
+        return this.nextPosition.y;
+    }
+
     render() {
         push();
         translate(this.x, this.y);
@@ -23,22 +32,14 @@ class Snake extends Entity {
         pop();
     }
 
-    moveForward() {
-        let newX = this.position.x;
-        let newY = this.position.y;
+    moveForward(t) {
+        this.nextPosition.x += this.velocity.x * t;
+        this.nextPosition.y += this.velocity.y * t;
+    }
 
-        for (let t = 0; t <= 1; t += 0.01) {
-            let nextX = this.velocity.x * t + this.position.x;
-            let nextY = this.velocity.y * t + this.position.y;
-            if (this.checkCollisions(nextX, nextY)) {
-                break;
-            }
-            newX = nextX;
-            newY = nextY;
-        }
-
-        this.position.x = newX;
-        this.position.y = newY;
+    confirmPosition() {
+        this.position.x = this.nextPosition.x;
+        this.position.y = this.nextPosition.y;
     }
 
     rotate(angle) {
@@ -50,19 +51,6 @@ class Snake extends Entity {
         let vx = this.speed * Math.cos(this.orientation);
         let vy = this.speed * Math.sin(this.orientation);
         this.velocity.set(vx, -vy);
-    }
-
-    checkCollisions(x, y) {
-        const standingTile = gameMap.getCurrentTile(x, y);
-        if (standingTile instanceof GroundTile) {
-            return false;
-        }
-
-        if (standingTile instanceof WaterTile) {
-            this.captured('Attention, tu ne peut pas nager!');
-        }
-
-        return true;
     }
 
     captured(message = '') {

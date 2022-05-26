@@ -1,8 +1,18 @@
 function moveCharacters() {
-    snakeControl();
+    characterRotationControl();
+
+    for (let t = 0; t <= 1; t += SETTINGS.calculationPrecision) {
+        if (actionnedKeys.space) {
+            snake.moveForward(SETTINGS.calculationPrecision);
+            if (checkCollisions(snake)) {
+                break;
+            }
+            snake.confirmPosition();
+        }
+    }
 }
 
-function snakeControl() {
+function characterRotationControl() {
     centerMouseX = mouseX - SETTINGS.width / 2;
     centerMouseY = SETTINGS.height / 2 - mouseY;
 
@@ -14,8 +24,22 @@ function snakeControl() {
     }
 
     snake.rotate(angle);
+}
 
-    if (actionnedKeys.space) {
-        snake.moveForward();
+function checkCollisions(character) {
+    return checkTileCollisions(character);
+}
+
+function checkTileCollisions(character) {
+    const standingTile = gameMap.getCurrentTile(character.nextX, character.nextY);
+
+    if (standingTile instanceof GroundTile) {
+        return false;
     }
+
+    if (standingTile instanceof WaterTile) {
+        character.captured('Attention, tu ne peux pas nager!');
+    }
+
+    return true;
 }
