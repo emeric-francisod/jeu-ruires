@@ -152,6 +152,6 @@ class Map {
             currentTile = this.getTile(currentTileCoordinates.x, currentTileCoordinates.y);
         }
 
-        return createVector(currentTile.position.x + this.grid.size / 2, currentTile.position.y + this.grid.size / 2);
+        return createVector(currentTile.position.x, currentTile.position.y);
     }
 }

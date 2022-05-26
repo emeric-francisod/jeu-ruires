@@ -8,7 +8,7 @@ const SETTINGS = {
 
 let snakeSettings = {
     maxEnergy: 100,
-    energyDepletionRate: 10,
+    energyDepletionRate: 60,
     width: 1.8 * SETTINGS.gridSize,
     height: 0.9 * SETTINGS.gridSize,
 };
