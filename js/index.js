@@ -47,7 +47,7 @@ function draw() {
         displayFailMessage();
     } else {
         background(75);
-        move();
+        moveCharacters();
         snake.looseEnergy();
         renderGame();
         renderGameUI();

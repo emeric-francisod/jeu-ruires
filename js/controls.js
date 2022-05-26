@@ -1,4 +1,8 @@
-function move() {
+function moveCharacters() {
+    snakeControl();
+}
+
+function snakeControl() {
     centerMouseX = mouseX - SETTINGS.width / 2;
     centerMouseY = SETTINGS.height / 2 - mouseY;
 
@@ -10,5 +14,8 @@ function move() {
     }
 
     snake.rotate(angle);
-    snake.moveForward();
+
+    if (actionnedKeys.space) {
+        snake.moveForward();
+    }
 }
