@@ -63,5 +63,13 @@ function createApple() {
         true
     );
     console.log('Spawn apple at ', spawnPoint.x, spawnPoint.y);
-    apples.push(new Apple(spawnPoint.x, spawnPoint.y, appleSettings.size));
+    apples.push(
+        new Apple(
+            spawnPoint.x,
+            spawnPoint.y,
+            appleSettings.size,
+            appleSettings.minNutritiveValue,
+            appleSettings.maxNutritiveValue
+        )
+    );
 }
