@@ -141,39 +141,43 @@ class Map {
         return false;
     }
 
-    testSymetricTiles(i, j) {
-        let coordinates = this.checkSpawnableTile(i, j);
-        if (coordinates) {
-            return coordinates;
-        }
-        coordinates = this.checkSpawnableTile(-i, j);
-        if (coordinates) {
-            return coordinates;
-        }
-        coordinates = this.checkSpawnableTile(i, -j);
-        if (coordinates) {
-            return coordinates;
-        }
-        coordinates = this.checkSpawnableTile(-i, -j);
-        if (coordinates) {
-            return coordinates;
-        }
-        coordinates = this.checkSpawnableTile(j, i);
-        if (coordinates) {
-            return coordinates;
-        }
-        coordinates = this.checkSpawnableTile(-j, i);
-        if (coordinates) {
-            return coordinates;
-        }
-        coordinates = this.checkSpawnableTile(j, -i);
-        if (coordinates) {
-            return coordinates;
-        }
-        coordinates = this.checkSpawnableTile(-j, -i);
-        if (coordinates) {
-            return coordinates;
-        }
+    testSymetricTiles(i, j, initialTestCase = 1) {
+        let coordinates;
+        let testCase = initialTestCase;
+        do {
+            switch (testCase) {
+                case 2:
+                    coordinates = i === 0 ? coordinates : this.checkSpawnableTile(-i, j);
+                    break;
+                case 3:
+                    coordinates = j === 0 ? coordinates : this.checkSpawnableTile(i, -j);
+                    break;
+                case 4:
+                    coordinates = i === 0 || j === 0 ? coordinates : this.checkSpawnableTile(-i, -j);
+                    break;
+                case 5:
+                    coordinates = i === j ? coordinates : this.checkSpawnableTile(j, i);
+                    break;
+                case 6:
+                    coordinates = i === j || j === 0 ? coordinates : this.checkSpawnableTile(-j, i);
+                    break;
+                case 7:
+                    coordinates = i === j || i === 0 ? coordinates : this.checkSpawnableTile(j, -i);
+                    break;
+                case 8:
+                    coordinates = i === j || j === 0 || i === 0 ? coordinates : this.checkSpawnableTile(-j, -i);
+                    break;
+                case 1:
+                default:
+                    coordinates = this.checkSpawnableTile(i, j);
+            }
+
+            if (coordinates) {
+                return coordinates;
+            }
+
+            testCase = testCase === 8 ? 1 : testCase + 1;
+        } while (testCase !== initialTestCase);
         return false;
     }
 
@@ -188,7 +192,8 @@ class Map {
             let d = radius - 1;
 
             while (y >= x) {
-                let coordinates = this.testSymetricTiles(x, y);
+                let circleZonePriority = randomPosition ? round(random(1, 8)) : 1;
+                let coordinates = this.testSymetricTiles(x, y, circleZonePriority);
                 if (coordinates) {
                     return coordinates;
                 }
