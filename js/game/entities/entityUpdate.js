@@ -6,6 +6,8 @@ function updateCharacters() {
     if (randomSpawnDecider <= 1 / (SETTINGS.tickSpeed * appleSettings.spawnRate)) {
         createApple();
     }
+
+    despawnApples();
 }
 
 function moveCharacters() {
@@ -72,4 +74,19 @@ function createApple() {
             appleSettings.maxNutritiveValue
         )
     );
+}
+
+function despawnApples() {
+    for (let appleId in apples) {
+        let apple = apples[appleId];
+        let snakeAppleDistanceSquared =
+            (snake.position.x - apple.position.x) * (snake.position.x - apple.position.x) +
+            (snake.position.y - apple.position.y) * (snake.position.y - apple.position.y);
+        let tileDistanceSquared = snakeAppleDistanceSquared / (SETTINGS.gridSize * SETTINGS.gridSize);
+
+        if (tileDistanceSquared >= appleSettings.despawnRadius * appleSettings.despawnRadius) {
+            apples.splice(appleId, 1);
+            console.log('Supprimer pomme n°', appleId);
+        }
+    }
 }

@@ -16,14 +16,14 @@ const snakeSettings = {
 const mapSettings = {
     gridSize: SETTINGS.gridSize,
     perlinZoom: 0.001,
-    seaLevel: 0.5,
+    seaLevel: 0.4,
     mountainLevel: 0.6,
     perlinOriginShift: 1000000,
 };
 
 const appleSettings = {
     size: SETTINGS.gridSize * 0.8,
-    spawnRate: 1,
+    spawnRate: 0.1,
     minSpawnRadius: 5,
     maxSpawnRadius: SETTINGS.width / SETTINGS.gridSize,
     despawnRadius: (SETTINGS.width * 2) / SETTINGS.gridSize,
@@ -93,7 +93,6 @@ function draw() {
         renderGame();
         updateFailMessageGUI();
         renderFailMessage();
-        //displayFailMessage();
     } else {
         background(75);
         updateCharacters();
