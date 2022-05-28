@@ -189,24 +189,16 @@ class Map {
         let originCoordinates = this.findTileCoordinates(createVector(centerX, centerY));
         let startRadius = randomPosition ? round(random(minRadius, maxRadius)) : minRadius;
         let radius = startRadius;
+        let circleZonePriority = randomPosition ? round(random(1, 8)) : 1;
 
         do {
             let x = 0;
             let y = radius;
             let d = radius - 1;
+            let coordinatesArray = [];
 
             while (y >= x) {
-                let circleZonePriority = randomPosition ? round(random(1, 8)) : 1;
-                let coordinates = this.testSymetricTiles(
-                    x,
-                    y,
-                    originCoordinates.x,
-                    originCoordinates.y,
-                    circleZonePriority
-                );
-                if (coordinates) {
-                    return coordinates;
-                }
+                coordinatesArray.push([x, y]);
 
                 if (d >= 2 * x) {
                     d -= 2 * x - 1;
@@ -220,6 +212,23 @@ class Map {
                     x++;
                 }
             }
+
+            let startIndex = randomPosition ? round(random(0, coordinatesArray.length - 1)) : 0;
+            let index = startIndex;
+            do {
+                let coordinates = this.testSymetricTiles(
+                    coordinatesArray[index][0],
+                    coordinatesArray[index][1],
+                    originCoordinates.x,
+                    originCoordinates.y,
+                    circleZonePriority
+                );
+                if (coordinates) {
+                    return coordinates;
+                }
+
+                index = index === coordinatesArray.length - 1 ? 0 : index + 1;
+            } while (index !== startIndex);
 
             radius = radius === maxRadius ? minRadius : radius + 1;
         } while (radius !== startRadius);

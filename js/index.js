@@ -16,17 +16,17 @@ const snakeSettings = {
 const mapSettings = {
     gridSize: SETTINGS.gridSize,
     perlinZoom: 0.001,
-    seaLevel: 0.4,
+    seaLevel: 0.5,
     mountainLevel: 0.6,
     perlinOriginShift: 1000000,
 };
 
 const appleSettings = {
     size: SETTINGS.gridSize * 0.8,
-    spawnRate: 5,
+    spawnRate: 1,
     minSpawnRadius: 5,
-    maxSpawnRadius: SETTINGS.width / 2 / SETTINGS.gridSize,
-    despawnRadius: SETTINGS.width / SETTINGS.gridSize,
+    maxSpawnRadius: SETTINGS.width / SETTINGS.gridSize,
+    despawnRadius: (SETTINGS.width * 2) / SETTINGS.gridSize,
     minNutritiveValue: 0,
     maxNutritiveValue: snakeSettings.maxEnergy,
 };
