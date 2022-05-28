@@ -133,28 +133,78 @@ class Map {
         return this.getTile(currentTileCoordinates.x, currentTileCoordinates.y);
     }
 
-    findSpawnPoint(x = 0, y = 0) {
-        let currentTileCoordinates = this.findTileCoordinates(createVector(x, y));
-        let currentTile = this.getTile(currentTileCoordinates.x, currentTileCoordinates.y);
-        let searchDepth = 0;
+    checkSpawnableTile(i, j) {
+        let testedTile = this.getTile(i, j);
+        if (testedTile instanceof GroundTile) {
+            return createVector(testedTile.position.x, testedTile.position.y);
+        }
+        return false;
+    }
 
-        while (!(currentTile instanceof GroundTile)) {
-            if (currentTileCoordinates.y === searchDepth) {
-                if (currentTileCoordinates.x === searchDepth) {
-                    searchDepth++;
+    testSymetricTiles(i, j) {
+        let coordinates = this.checkSpawnableTile(i, j);
+        if (coordinates) {
+            return coordinates;
+        }
+        coordinates = this.checkSpawnableTile(-i, j);
+        if (coordinates) {
+            return coordinates;
+        }
+        coordinates = this.checkSpawnableTile(i, -j);
+        if (coordinates) {
+            return coordinates;
+        }
+        coordinates = this.checkSpawnableTile(-i, -j);
+        if (coordinates) {
+            return coordinates;
+        }
+        coordinates = this.checkSpawnableTile(j, i);
+        if (coordinates) {
+            return coordinates;
+        }
+        coordinates = this.checkSpawnableTile(-j, i);
+        if (coordinates) {
+            return coordinates;
+        }
+        coordinates = this.checkSpawnableTile(j, -i);
+        if (coordinates) {
+            return coordinates;
+        }
+        coordinates = this.checkSpawnableTile(-j, -i);
+        if (coordinates) {
+            return coordinates;
+        }
+        return false;
+    }
+
+    findSpawnPoint(centerX = 0, centerY = 0, minRadius = 0, maxRadius = 10000) {
+        let originCoordinates = this.findTileCoordinates(createVector(centerX, centerY));
+        let radius = minRadius;
+        while (radius <= maxRadius) {
+            let x = originCoordinates.x;
+            let y = radius + originCoordinates.y;
+            let d = radius - 1;
+
+            while (y >= x) {
+                let coordinates = this.testSymetricTiles(x, y);
+                if (coordinates) {
+                    return coordinates;
                 }
-                currentTileCoordinates.x++;
-            } else if (currentTileCoordinates.x === -searchDepth) {
-                currentTileCoordinates.y++;
-            } else if (currentTileCoordinates.y === -searchDepth) {
-                currentTileCoordinates.x--;
-            } else if (currentTileCoordinates.x === searchDepth) {
-                currentTileCoordinates.y--;
+
+                if (d >= 2 * x) {
+                    d -= 2 * x - 1;
+                    x++;
+                } else if (d < 2 * (radius - y)) {
+                    d += 2 * y - 1;
+                    y--;
+                } else {
+                    d += 2 * (y - x - 1);
+                    y--;
+                    x++;
+                }
             }
 
-            currentTile = this.getTile(currentTileCoordinates.x, currentTileCoordinates.y);
+            radius++;
         }
-
-        return createVector(currentTile.position.x, currentTile.position.y);
     }
 }
