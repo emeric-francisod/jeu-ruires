@@ -39,6 +39,7 @@ function setup() {
         gameMap = new Map(SETTINGS.width, SETTINGS.height, mapSettings);
         spawnPoint = gameMap.findSpawnPoint();
     } while (!spawnPoint);
+    console.log(spawnPoint.x, spawnPoint.y);
     snake = new Snake(spawnPoint.x, spawnPoint.y, snakeSettings);
 
     guis.inGameGui = new GUI();

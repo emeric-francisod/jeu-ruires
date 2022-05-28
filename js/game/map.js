@@ -177,10 +177,12 @@ class Map {
         return false;
     }
 
-    findSpawnPoint(centerX = 0, centerY = 0, minRadius = 0, maxRadius = 10000) {
+    findSpawnPoint(centerX = 0, centerY = 0, minRadius = 0, maxRadius = 10000, randomPosition = false) {
         let originCoordinates = this.findTileCoordinates(createVector(centerX, centerY));
-        let radius = minRadius;
-        while (radius <= maxRadius) {
+        let startRadius = randomPosition ? round(random(minRadius, maxRadius)) : minRadius;
+        let radius = startRadius;
+
+        do {
             let x = originCoordinates.x;
             let y = radius + originCoordinates.y;
             let d = radius - 1;
@@ -204,7 +206,7 @@ class Map {
                 }
             }
 
-            radius++;
-        }
+            radius = radius === maxRadius ? minRadius : radius + 1;
+        } while (radius !== startRadius);
     }
 }
