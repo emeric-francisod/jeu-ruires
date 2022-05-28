@@ -1,6 +1,11 @@
 function updateCharacters() {
     moveCharacters();
     snake.looseEnergy();
+
+    let randomSpawnDecider = random();
+    if (randomSpawnDecider <= 1 / (SETTINGS.tickSpeed * appleSettings.spawnRate)) {
+        createApple();
+    }
 }
 
 function moveCharacters() {
@@ -47,4 +52,16 @@ function checkTileCollisions(character) {
     }
 
     return true;
+}
+
+function createApple() {
+    let spawnPoint = gameMap.findSpawnPoint(
+        snake.x,
+        snake.y,
+        appleSettings.minSpawnRadius,
+        appleSettings.maxSpawnRadius,
+        true
+    );
+    console.log('Spawn apple at ', spawnPoint.x, spawnPoint.y);
+    apples.push(new Apple(spawnPoint.x, spawnPoint.y, appleSettings.size));
 }

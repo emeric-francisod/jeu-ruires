@@ -8,9 +8,16 @@ function resetCoordinates() {
     rectMode(CORNER);
 }
 
+function renderApples() {
+    for (let apple of apples) {
+        apple.render();
+    }
+}
+
 function renderGame() {
     centerOnSnake();
     gameMap.render(snake.x, snake.y);
+    renderApples();
     snake.render();
 }
 

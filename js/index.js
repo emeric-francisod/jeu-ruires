@@ -8,7 +8,7 @@ const SETTINGS = {
 
 const snakeSettings = {
     maxEnergy: 100,
-    energyDepletionRate: 5,
+    energyDepletionRate: 120,
     width: 1.8 * SETTINGS.gridSize,
     height: 0.9 * SETTINGS.gridSize,
 };
@@ -16,14 +16,23 @@ const snakeSettings = {
 const mapSettings = {
     gridSize: SETTINGS.gridSize,
     perlinZoom: 0.001,
-    seaLevel: 0.5,
-    mountainLevel: 0.6,
+    seaLevel: 0,
+    mountainLevel: 1,
     perlinOriginShift: 1000000,
+};
+
+const appleSettings = {
+    size: SETTINGS.gridSize * 0.8,
+    spawnRate: 1,
+    minSpawnRadius: 5,
+    maxSpawnRadius: SETTINGS.width / 2 / SETTINGS.gridSize,
+    despawnRadius: SETTINGS.width / SETTINGS.gridSize,
 };
 
 let gameMap;
 let snake;
 let guis = {};
+let apples = [];
 
 let actionnedKeys = {
     space: false,
@@ -94,6 +103,9 @@ function draw() {
 
 function keyPressed() {
     actionnedKeys.space = key === ' ';
+    if (key === 'a') {
+        createApple();
+    }
     return false;
 }
 
