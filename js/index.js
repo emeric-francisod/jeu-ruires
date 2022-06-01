@@ -89,7 +89,7 @@ function setup() {
 }
 
 function draw() {
-    if (snake.isCaptured()) {
+    /* if (snake.isCaptured()) {
         renderGame();
         updateFailMessageGUI();
         renderFailMessage();
@@ -99,7 +99,57 @@ function draw() {
         updateGameGUI();
         renderGame();
         renderGameUI();
+    } */
+    background(55);
+    noStroke();
+    rectMode(CENTER);
+    fill('black');
+    resetMatrix();
+    translate(width / 2, height / 2);
+    circle(0, 0, 5);
+    rect(50, 70, 40, 40);
+    fill('gray');
+    rect(mouseX - width / 2, mouseY - height / 2, 20, 40);
+
+    let h1 = new RectangleHitbox(50, 70, 40, 40, 0);
+    let h2 = new RectangleHitbox(mouseX - width / 2, mouseY - height / 2, 20, 40, 0);
+    console.group();
+    if (h1.testCollision(h2)) {
+        //console.log('Collision');
     }
+    console.groupEnd();
+}
+
+function drawVector(vector, color) {
+    vector.setMag(10);
+    stroke(color);
+    strokeWeight(2);
+    line(0, 0, vector.x, vector.y);
+    fill(color);
+    noStroke();
+    rect(vector.x, vector.y, 4, 4);
+}
+function drawPoint(vector, color, size) {
+    noStroke();
+    fill(color);
+    circle(vector.x, vector.y, size);
+}
+
+function drawSimplex(simplex, color, size) {
+    for (let i = 0; i < simplex.length; i++) {
+        drawPoint(simplex[i], color, size);
+        stroke(color);
+        strokeWeight(size);
+        if (i > 0) {
+            line(simplex[i - 1].x, simplex[i - 1].y, simplex[i].x, simplex[i].y);
+        } else {
+            line(simplex[simplex.length - 1].x, simplex[simplex.length - 1].y, simplex[i].x, simplex[i].y);
+        }
+    }
+}
+
+function mousePressed() {
+    noLoop();
 }
 
 function keyPressed() {

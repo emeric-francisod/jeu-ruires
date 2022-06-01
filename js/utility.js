@@ -24,3 +24,11 @@ function randomNormal(min = 0, max = 1, skew = 1) {
 
     return num;
 }
+
+tripleProduct = function (v1, v2, v3) {
+    return p5.Vector.cross(p5.Vector.cross(v1, v2), v3);
+};
+
+function sleep(time) {
+    return new Promise((resolve) => setTimeout(resolve, time));
+}
