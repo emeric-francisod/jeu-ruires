@@ -23,7 +23,7 @@ const mapSettings = {
 
 const appleSettings = {
     size: SETTINGS.gridSize * 0.8,
-    spawnRate: 0.1,
+    spawnRate: 1,
     minSpawnRadius: 5,
     maxSpawnRadius: SETTINGS.width / SETTINGS.gridSize,
     despawnRadius: (SETTINGS.width * 2) / SETTINGS.gridSize,

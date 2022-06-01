@@ -49,9 +49,10 @@ class Snake extends Entity {
     }
 
     calculateVelocity() {
-        let vx = this.speed * Math.cos(this.orientation);
+        this.velocity = p5.Vector.fromAngle(-this.orientation, this.speed);
+        /* let vx = this.speed * Math.cos(this.orientation);
         let vy = this.speed * Math.sin(this.orientation);
-        this.velocity.set(vx, -vy);
+        this.velocity.set(vx, -vy); */
     }
 
     captured(message = '') {
