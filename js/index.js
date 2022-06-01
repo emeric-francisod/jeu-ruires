@@ -107,17 +107,25 @@ function draw() {
     resetMatrix();
     translate(width / 2, height / 2);
     circle(0, 0, 5);
-    rect(50, 70, 40, 40);
+    push();
+    translate(50, 70);
+    rotate(PI / 5);
+    rect(0, 0, 40, 40);
+    pop();
     fill('gray');
-    rect(mouseX - width / 2, mouseY - height / 2, 20, 40);
+    push();
+    translate(mouseX - width / 2, mouseY - height / 2);
+    circle(0, 0, 20);
+    pop();
 
-    let h1 = new RectangleHitbox(50, 70, 40, 40, 0);
-    let h2 = new RectangleHitbox(mouseX - width / 2, mouseY - height / 2, 20, 40, 0);
-    console.group();
+    let h1 = new RectangleHitbox(50, 70, 40, 40, PI / 5);
+    let h2 = new CircleHitbox(mouseX - width / 2, mouseY - height / 2, 20);
+
     if (h1.testCollision(h2)) {
-        //console.log('Collision');
+        console.log('Collision');
+    } else {
+        console.log('No collision');
     }
-    console.groupEnd();
 }
 
 function drawVector(vector, color) {
@@ -146,10 +154,6 @@ function drawSimplex(simplex, color, size) {
             line(simplex[simplex.length - 1].x, simplex[simplex.length - 1].y, simplex[i].x, simplex[i].y);
         }
     }
-}
-
-function mousePressed() {
-    noLoop();
 }
 
 function keyPressed() {
