@@ -8,6 +8,8 @@ class Hitbox {
     }
 
     support(hitbox, direction) {
+        let thisFurthest = this.furthestPoint(direction);
+        let otherFurthest = hitbox.furthestPoint(p5.Vector.mult(direction, -1));
         return p5.Vector.sub(this.furthestPoint(direction), hitbox.furthestPoint(p5.Vector.mult(direction, -1)));
     }
 
@@ -53,23 +55,19 @@ class Hitbox {
 
     testCollision(hitbox) {
         let directionVector = p5.Vector.sub(hitbox.center, this.center).normalize();
-        drawVector(directionVector, 'red');
+
         let simplex = [this.support(hitbox, directionVector)];
-        drawSimplex(simplex, 'red', 10);
         let ORIGIN = createVector(0, 0);
 
         directionVector = p5.Vector.sub(ORIGIN, simplex[0]).normalize();
-        drawVector(directionVector, 'green');
 
         while (true) {
             let pointA = this.support(hitbox, directionVector);
-            drawPoint(pointA, 'green', 2);
 
             if (pointA.dot(directionVector) < 0) {
                 return false;
             }
             simplex.push(pointA);
-            drawSimplex(simplex, 'green', 5);
 
             directionVector = this.handleSimplex(simplex, directionVector);
 
@@ -88,7 +86,6 @@ class CircleHitbox extends Hitbox {
 
     furthestPoint(directionVector) {
         let result = p5.Vector.add(this.center, p5.Vector.mult(directionVector, this.radius));
-        result.set(round(result.x, 2), round(result.y, 2));
         return result;
     }
 }
@@ -114,15 +111,14 @@ class RectangleHitbox extends Hitbox {
         );
         this.corners.forEach((coordinates) => coordinates.setHeading(coordinates.heading() + this.angle));
         this.corners.forEach((coordinates) => coordinates.add(this.center));
-        this.corners.forEach((coordinates) => coordinates.set(round(coordinates.x, 2), round(coordinates.y, 2)));
     }
 
     furthestPoint(directionVector) {
         let furthestPoint = this.corners[0];
-        let dotProduct = round(furthestPoint.dot(directionVector), 2);
+        let dotProduct = furthestPoint.dot(directionVector);
 
         for (let i = 1; i < this.corners.length; i++) {
-            let newDot = round(this.corners[i].dot(directionVector), 2);
+            let newDot = this.corners[i].dot(directionVector);
             if (newDot > dotProduct) {
                 dotProduct = newDot;
                 furthestPoint = this.corners[i];
