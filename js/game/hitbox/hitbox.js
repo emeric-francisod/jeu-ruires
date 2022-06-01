@@ -88,6 +88,13 @@ class CircleHitbox extends Hitbox {
         let result = p5.Vector.add(this.center, p5.Vector.mult(directionVector, this.radius));
         return result;
     }
+
+    render() {
+        stroke('red');
+        strokeWeight(2);
+        noFill();
+        circle(this.center.x, this.center.y, this.radius);
+    }
 }
 
 class RectangleHitbox extends Hitbox {
@@ -99,6 +106,29 @@ class RectangleHitbox extends Hitbox {
         };
         this.angle = angle;
         this.corners = [];
+        this.getCornersCoordinates();
+    }
+
+    render() {
+        rectMode(CENTER);
+        push();
+        translate(this.center.x, this.center.y);
+        rotate(-this.angle);
+        stroke('red');
+        strokeWeight(2);
+        noFill();
+        rect(0, 0, this.size.width, this.size.height);
+        pop();
+    }
+
+    setAngle(angle) {
+        this.angle = angle;
+        this.corners = [];
+        this.getCornersCoordinates();
+    }
+
+    setPosition(x, y) {
+        this.center.set(x, y);
         this.getCornersCoordinates();
     }
 

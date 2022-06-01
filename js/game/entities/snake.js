@@ -12,6 +12,14 @@ class Snake extends Entity {
         this.maxEnergy = settings.maxEnergy;
         this.energy = this.maxEnergy;
         this.energyDepletionRate = settings.energyDepletionRate;
+
+        this.hitbox = new RectangleHitbox(
+            this.position.x,
+            this.position.y,
+            this.size.width,
+            this.size.height,
+            this.orientation
+        );
     }
 
     get nextX() {
@@ -41,18 +49,17 @@ class Snake extends Entity {
     confirmPosition() {
         this.position.x = this.nextPosition.x;
         this.position.y = this.nextPosition.y;
+        this.hitbox.setPosition(this.position.x, this.position.y);
     }
 
     rotate(angle) {
         this.orientation = angle;
+        this.hitbox.setAngle(this.orientation);
         this.calculateVelocity();
     }
 
     calculateVelocity() {
         this.velocity = p5.Vector.fromAngle(-this.orientation, this.speed);
-        /* let vx = this.speed * Math.cos(this.orientation);
-        let vy = this.speed * Math.sin(this.orientation);
-        this.velocity.set(vx, -vy); */
     }
 
     captured(message = '') {

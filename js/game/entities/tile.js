@@ -7,6 +7,7 @@ class Tile extends Entity {
             saturation: [0, 100, 0],
             value: [0, 100, 0],
         };
+        this.hitbox = new RectangleHitbox(x, y, size, size, 0);
     }
 
     setColor() {

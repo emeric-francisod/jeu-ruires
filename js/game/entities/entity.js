@@ -5,6 +5,7 @@ class Entity {
             width: w,
             height: h,
         };
+        this.hitbox;
     }
 
     get x() {
