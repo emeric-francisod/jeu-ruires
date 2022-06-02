@@ -96,11 +96,11 @@ class Snake extends Entity {
     manageCollisions(entities = []) {
         let collisionEffects = false;
         entities.forEach((entity) => {
+            if (!(entity instanceof GroundTile)) {
+                collisionEffects = true;
+            }
             if (entity instanceof WaterTile) {
-                collisionEffects = true;
                 this.captured('Attention, tu ne peux pas nager!');
-            } else if (entity instanceof MountainTile) {
-                collisionEffects = true;
             }
         });
         return collisionEffects;
