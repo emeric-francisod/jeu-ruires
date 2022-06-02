@@ -1,6 +1,21 @@
 class Hitbox {
     constructor(centerX, centerY) {
         this.center = createVector(centerX, centerY);
+        this.boundingBox = {
+            x: centerX,
+            y: centerY,
+            w: 0,
+            h: 0,
+        };
+    }
+
+    getSearchBox(size) {
+        return {
+            x: this.boundingBox.x - size / 2,
+            y: this.boundingBox.y - size / 2,
+            w: this.boundingBox.w + size,
+            h: this.boundingBox.h + size,
+        };
     }
 
     furthestPoint(directionVector) {
@@ -8,8 +23,6 @@ class Hitbox {
     }
 
     support(hitbox, direction) {
-        let thisFurthest = this.furthestPoint(direction);
-        let otherFurthest = hitbox.furthestPoint(p5.Vector.mult(direction, -1));
         return p5.Vector.sub(this.furthestPoint(direction), hitbox.furthestPoint(p5.Vector.mult(direction, -1)));
     }
 
@@ -82,6 +95,7 @@ class CircleHitbox extends Hitbox {
     constructor(centerX, centerY, radius) {
         super(centerX, centerY);
         this.radius = radius;
+        this.getBoundingBox();
     }
 
     furthestPoint(directionVector) {
@@ -95,6 +109,15 @@ class CircleHitbox extends Hitbox {
         noFill();
         circle(this.center.x, this.center.y, this.radius);
     }
+
+    getBoundingBox() {
+        this.boundingBox = {
+            x: this.center.x - this.radius,
+            y: this.center.y - this.radius,
+            w: this.radius,
+            h: this.radius,
+        };
+    }
 }
 
 class RectangleHitbox extends Hitbox {
@@ -107,6 +130,7 @@ class RectangleHitbox extends Hitbox {
         this.angle = angle;
         this.corners = [];
         this.getCornersCoordinates();
+        this.getBoundingBox();
     }
 
     render() {
@@ -125,11 +149,13 @@ class RectangleHitbox extends Hitbox {
         this.angle = angle;
         this.corners = [];
         this.getCornersCoordinates();
+        this.getBoundingBox();
     }
 
     setPosition(x, y) {
         this.center.set(x, y);
         this.getCornersCoordinates();
+        this.getBoundingBox();
     }
 
     getCornersCoordinates() {
@@ -155,5 +181,34 @@ class RectangleHitbox extends Hitbox {
             }
         }
         return furthestPoint;
+    }
+
+    getBoundingBox() {
+        let minX = this.corners[0].x;
+        let minY = this.corners[0].y;
+        let maxX = minX;
+        let maxY = minY;
+
+        for (let i = 1; i < this.corners.length; i++) {
+            if (this.corners[i].x < minX) {
+                minX = this.corners[i].x;
+            }
+            if (this.corners[i].y < minY) {
+                minY = this.corners[i].y;
+            }
+            if (this.corners[i].x > maxX) {
+                maxX = this.corners[i].x;
+            }
+            if (this.corners[i].y > maxY) {
+                maxY = this.corners[i].y;
+            }
+        }
+
+        this.boundingBox = {
+            x: minX,
+            y: minY,
+            w: abs(maxX - minX),
+            h: abs(maxY - minY),
+        };
     }
 }

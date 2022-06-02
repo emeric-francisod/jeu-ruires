@@ -67,7 +67,6 @@ function snakeRotationControl() {
 function checkCollisions(character) {
     let collisionData = checkTileCollisions(character);
     collisionData = collisionData.concat(checkEntityCollisions(character));
-    console.log(collisionData);
     return collisionData;
 }
 
