@@ -93,14 +93,26 @@ class Snake extends Entity {
         }
     }
 
+    eat(apple) {
+        this.energy += apple.nutritiveValue;
+        if (this.energy > this.maxEnergy) {
+            this.energy = this.maxEnergy;
+        }
+        despawnApple(apple);
+    }
+
     manageCollisions(entities = []) {
-        let collisionEffects = false;
+        let collisionEffects = true;
         entities.forEach((entity) => {
-            if (!(entity instanceof GroundTile)) {
-                collisionEffects = true;
+            if (entity instanceof GroundTile) {
+                collisionEffects = false;
             }
             if (entity instanceof WaterTile) {
                 this.captured('Attention, tu ne peux pas nager!');
+            }
+            if (entity instanceof Apple) {
+                collisionEffects = false;
+                this.eat(entity);
             }
         });
         return collisionEffects;

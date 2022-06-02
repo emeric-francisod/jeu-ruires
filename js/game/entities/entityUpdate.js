@@ -71,7 +71,26 @@ function checkCollisions(character) {
 }
 
 function checkEntityCollisions(character) {
-    return [];
+    let tileCollisions = [];
+    apples.forEach((apple) => {
+        if (
+            circleCollision(
+                {
+                    c1x: character.x,
+                    c1y: character.y,
+                    r1: character.size.outRadius,
+                },
+                {
+                    c2x: apple.x,
+                    c2y: apple.y,
+                    r2: apple.size.outRadius,
+                }
+            )
+        ) {
+            tileCollisions.push(apple);
+        }
+    });
+    return tileCollisions;
 }
 
 function checkTileCollisions(character) {
@@ -84,6 +103,10 @@ function checkTileCollisions(character) {
 }
 
 function createApple() {
+    if (apples.length >= appleSettings.spawnCap) {
+        return;
+    }
+
     let spawnPoint = gameMap.findSpawnPoint(
         snake.x,
         snake.y,
@@ -114,6 +137,19 @@ function despawnApples() {
         if (tileDistanceSquared >= appleSettings.despawnRadius * appleSettings.despawnRadius) {
             apples.splice(appleId, 1);
             console.log('Supprimer pomme n°', appleId);
+        }
+    }
+}
+
+function despawnApple(apple) {
+    for (let appleId in apples) {
+        if (
+            apple.x === apples[appleId].x &&
+            apple.y === apples[appleId].y &&
+            apple.nutritiveValue === apples[appleId].nutritiveValue
+        ) {
+            apples.splice(appleId, 1);
+            console.log('Supprimer pomme n°', appleId, 'manuellement');
         }
     }
 }

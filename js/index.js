@@ -3,13 +3,13 @@ const SETTINGS = {
     height: 500,
     tickSpeed: 24,
     gridSize: 10,
-    movementCalculationPrecision: 0.01,
-    rotationCalculationPrecision: Math.PI / 720,
+    movementCalculationPrecision: 0.05,
+    rotationCalculationPrecision: Math.PI / 360,
 };
 
 const snakeSettings = {
     maxEnergy: 100,
-    energyDepletionRate: 120,
+    energyDepletionRate: 20,
     width: 1.8 * SETTINGS.gridSize,
     height: 0.9 * SETTINGS.gridSize,
 };
@@ -25,11 +25,12 @@ const mapSettings = {
 const appleSettings = {
     size: SETTINGS.gridSize * 0.8,
     spawnRate: 1,
+    spawnCap: 10,
     minSpawnRadius: 5,
     maxSpawnRadius: SETTINGS.width / SETTINGS.gridSize,
     despawnRadius: (SETTINGS.width * 2) / SETTINGS.gridSize,
     minNutritiveValue: 0,
-    maxNutritiveValue: snakeSettings.maxEnergy,
+    maxNutritiveValue: snakeSettings.maxEnergy * 0.33,
 };
 
 let gameMap;

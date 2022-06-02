@@ -3,6 +3,7 @@ class Apple extends Entity {
         super(x, y, d, d);
         this.nutritiveValue = this.generateNutritiveValue(minNutritiveValue, maxNutritiveValue);
         this.hitbox = new CircleHitbox(x, y, d);
+        this.size.outRadius = d / 2;
     }
 
     render() {

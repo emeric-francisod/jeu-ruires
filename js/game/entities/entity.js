@@ -4,6 +4,7 @@ class Entity {
         this.size = {
             width: w,
             height: h,
+            outRadius: sqrt(sq(w / 2) + sq(h / 2)),
         };
         this.hitbox;
     }

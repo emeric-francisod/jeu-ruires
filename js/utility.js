@@ -32,3 +32,9 @@ tripleProduct = function (v1, v2, v3) {
 function sleep(time) {
     return new Promise((resolve) => setTimeout(resolve, time));
 }
+
+function circleCollision({ c1x, c1y, r1 }, { c2x, c2y, r2 }) {
+    let distance = sqrt(sq(c1x - c2x) + sq(c1y - c2y));
+    let minimumDistance = r1 + r2;
+    return distance <= minimumDistance;
+}
