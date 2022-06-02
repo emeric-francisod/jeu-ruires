@@ -8,7 +8,7 @@ class Map {
             seaLevel = 0.4,
             mountainLevel = 0.6,
             perlinOriginShift = 1000000,
-            initialMapLoadingArea = 5,
+            initialMapLoadingArea = 1,
         }
     ) {
         this.perlinSettings = {
