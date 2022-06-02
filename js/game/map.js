@@ -2,7 +2,14 @@ class Map {
     constructor(
         canvasWidth,
         canvasHeight,
-        { gridSize = 10, perlinZoom = 0.001, seaLevel = 0.4, mountainLevel = 0.6, perlinOriginShift = 1000000 }
+        {
+            gridSize = 10,
+            perlinZoom = 0.001,
+            seaLevel = 0.4,
+            mountainLevel = 0.6,
+            perlinOriginShift = 1000000,
+            initialMapLoadingArea = 5,
+        }
     ) {
         this.perlinSettings = {
             zoom: perlinZoom,
@@ -23,11 +30,19 @@ class Map {
         };
         this.mapCache = {};
 
-        for (let i = 0 - this.grid.width; i < this.grid.width * 2 + 1; i++) {
+        for (
+            let i = 0 - this.grid.width * initialMapLoadingArea;
+            i < this.grid.width * (initialMapLoadingArea + 1) + 1;
+            i++
+        ) {
             let xCacheIndex = '' + i;
             this.mapCache[xCacheIndex] = {};
 
-            for (let j = 0 - this.grid.height; j < this.grid.height * 2 + 1; j++) {
+            for (
+                let j = 0 - this.grid.height * initialMapLoadingArea;
+                j < this.grid.height * (initialMapLoadingArea + 1) + 1;
+                j++
+            ) {
                 let yCacheIndex = '' + j;
                 this.mapCache[xCacheIndex][yCacheIndex] = this.createTile(
                     createVector(this.convertFromIndexToCoordinate(i), this.convertFromIndexToCoordinate(j))
