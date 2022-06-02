@@ -1,5 +1,5 @@
 function updateCharacters() {
-    moveCharacters();
+    updateSnake();
     snake.looseEnergy();
 
     let randomSpawnDecider = random();
@@ -10,13 +10,18 @@ function updateCharacters() {
     despawnApples();
 }
 
-function moveCharacters() {
-    characterRotationControl();
+function updateSnake() {
+    snakeRotationControl();
+    snakeMoveControl();
+}
 
-    for (let t = 0; t <= 1; t += SETTINGS.calculationPrecision) {
+function snakeMoveControl() {
+    snake.calculateVelocity();
+    for (let t = 0; t <= 1; t += SETTINGS.movementCalculationPrecision) {
         if (actionnedKeys.space) {
-            snake.moveForward(SETTINGS.calculationPrecision);
+            snake.moveForward(SETTINGS.movementCalculationPrecision);
             if (checkCollisions(snake)) {
+                snake.confirmPosition(false);
                 break;
             }
             snake.confirmPosition();
@@ -24,7 +29,7 @@ function moveCharacters() {
     }
 }
 
-function characterRotationControl() {
+function snakeRotationControl() {
     centerMouseX = mouseX - SETTINGS.width / 2;
     centerMouseY = SETTINGS.height / 2 - mouseY;
 
@@ -35,7 +40,24 @@ function characterRotationControl() {
         angle += Math.PI * 2;
     }
 
-    snake.rotate(angle);
+    let currentAngle = snake.orientation;
+
+    while (currentAngle !== angle) {
+        if (abs(snake.orientation - angle) < SETTINGS.rotationCalculationPrecision) {
+            currentAngle = angle;
+        } else if (snake.orientation < angle) {
+            currentAngle += SETTINGS.rotationCalculationPrecision;
+        } else {
+            currentAngle -= SETTINGS.rotationCalculationPrecision;
+        }
+
+        snake.rotate(currentAngle);
+        if (checkCollisions(snake)) {
+            snake.confirmAngle(false);
+            continue;
+        }
+        snake.confirmAngle();
+    }
 }
 
 function checkCollisions(character) {
