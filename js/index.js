@@ -10,6 +10,7 @@ const SETTINGS = {
 const snakeSettings = {
     maxEnergy: 100,
     energyDepletionRate: 20,
+    scoreIncreaseRate: 10,
     width: 1.8 * SETTINGS.gridSize,
     height: 0.9 * SETTINGS.gridSize,
 };
@@ -57,6 +58,10 @@ function setup() {
 
     guis.inGameGui = new GUI();
     guis.inGameGui.addComponent(new HealthBar(20, 15, 100, 15, snakeSettings.maxEnergy), 'health');
+    guis.inGameGui.addComponent(
+        new Message(SETTINGS.width - 20, 15, 'Score: ', 25, 'white', 'top', 'right', true, 200),
+        'score'
+    );
 
     let failMessageBackgroundColor = color(290, 95, 5, 0.7);
     guis.failMessage = new GUI(failMessageBackgroundColor);

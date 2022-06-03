@@ -1,6 +1,7 @@
 function updateCharacters() {
     updateSnake();
     snake.looseEnergy();
+    snake.winPoints();
 
     let randomSpawnDecider = random();
     if (randomSpawnDecider <= 1 / (SETTINGS.tickSpeed * appleSettings.spawnRate)) {

@@ -1,5 +1,5 @@
 class Snake extends Entity {
-    constructor(x, y, settings) {
+    constructor(x, y, settings, score = 0) {
         super(x, y, settings.width, settings.height);
         this.nextPosition = createVector(x, y);
         this.orientation = 0;
@@ -13,6 +13,9 @@ class Snake extends Entity {
         this.maxEnergy = settings.maxEnergy;
         this.energy = this.maxEnergy;
         this.energyDepletionRate = settings.energyDepletionRate;
+
+        this.score = score;
+        this.scoreIncreaseRate = settings.scoreIncreaseRate;
     }
 
     get nextX() {
@@ -78,6 +81,14 @@ class Snake extends Entity {
         this.energy -= this.maxEnergy / (this.energyDepletionRate * SETTINGS.tickSpeed);
         if (this.energy <= 0) {
             this.captured("Tu n'as pas la force de continuer. Pense à manger des pommes, c'est bon les pommes.");
+        }
+    }
+
+    winPoints(points = null) {
+        if (points === null) {
+            this.score += this.scoreIncreaseRate / SETTINGS.tickSpeed;
+        } else {
+            this.score += points;
         }
     }
 

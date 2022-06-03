@@ -42,10 +42,11 @@ class Message extends GuiComponent {
 
     render() {
         fill(this.color);
+        noStroke();
+        rectMode(CENTER);
         textAlign(this.align.horizontal, this.align.vertical);
         textSize(this.size);
         textStyle(this.style);
-        rectMode(CENTER);
-        text(this.message, this.position.x, this.position.y, this.maxWidth);
+        text(this.message, this.position.x - this.maxWidth / 2, this.position.y, this.maxWidth);
     }
 }
