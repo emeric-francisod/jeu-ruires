@@ -43,7 +43,10 @@ function foxRotationControl(fox) {
     let tileDistanceSquared = foxSnakeDistanceSquared / (SETTINGS.gridSize * SETTINGS.gridSize);
 
     if (tileDistanceSquared <= foxSettings.flightRadius * foxSettings.flightRadius) {
-        fox.rotate(snake.orientation);
+        let snakeVector = snake.position;
+        let foxVector = fox.position;
+        let snakeFoxVector = p5.Vector.sub(foxVector, snakeVector);
+        fox.rotate(-snakeFoxVector.heading());
     } else if (fox.stepToDo <= 0) {
         fox.rotate(random(0, TWO_PI));
         fox.stepToDo = round(random(0, SETTINGS.tickSpeed * 10));

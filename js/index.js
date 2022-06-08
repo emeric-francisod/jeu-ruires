@@ -19,15 +19,15 @@ const snakeSettings = {
 const foxSettings = {
     width: 1.4 * SETTINGS.gridSize,
     height: 1.2 * SETTINGS.gridSize,
-    spawnRate: 0.5,
-    spawnCap: 10,
+    spawnRate: 3,
+    spawnCap: 7,
     minSpawnRadius: 7,
     maxSpawnRadius: SETTINGS.width / SETTINGS.gridSize,
     despawnRadius: (SETTINGS.width * 2) / SETTINGS.gridSize,
     flightRadius: 7,
     minScorePercentage: 1,
     maxScorePercentage: 15,
-    speed: 4.5,
+    speed: 3,
 };
 
 const mapSettings = {
@@ -40,10 +40,10 @@ const mapSettings = {
 
 const appleSettings = {
     size: SETTINGS.gridSize * 0.8,
-    spawnRate: 0.5,
+    spawnRate: 2,
     spawnCap: 10,
     minSpawnRadius: 5,
-    maxSpawnRadius: SETTINGS.width / SETTINGS.gridSize,
+    maxSpawnRadius: SETTINGS.width / 2 / SETTINGS.gridSize,
     despawnRadius: (SETTINGS.width * 2) / SETTINGS.gridSize,
     minNutritiveValue: 0,
     maxNutritiveValue: snakeSettings.maxEnergy * 0.33,
