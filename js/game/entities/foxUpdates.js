@@ -12,23 +12,23 @@ function createFox() {
     );
     console.log('Spawn fox at ', spawnPoint.x, spawnPoint.y);
     foxes.push(new Fox(spawnPoint.x, spawnPoint.y, foxSettings));
-} /*
+}
 
 function despawnFoxes() {
-    for (let appleId in apples) {
-        let apple = apples[appleId];
-        let snakeAppleDistanceSquared =
-            (snake.position.x - apple.position.x) * (snake.position.x - apple.position.x) +
-            (snake.position.y - apple.position.y) * (snake.position.y - apple.position.y);
-        let tileDistanceSquared = snakeAppleDistanceSquared / (SETTINGS.gridSize * SETTINGS.gridSize);
+    for (let foxId in foxes) {
+        let fox = foxes[foxId];
+        let foxAppleDistanceSquared =
+            (snake.position.x - fox.position.x) * (snake.position.x - fox.position.x) +
+            (snake.position.y - fox.position.y) * (snake.position.y - fox.position.y);
+        let tileDistanceSquared = foxAppleDistanceSquared / (SETTINGS.gridSize * SETTINGS.gridSize);
 
-        if (tileDistanceSquared >= appleSettings.despawnRadius * appleSettings.despawnRadius) {
-            apples.splice(appleId, 1);
-            console.log('Supprimer pomme n°', appleId);
+        if (tileDistanceSquared >= foxSettings.despawnRadius * foxSettings.despawnRadius) {
+            foxes.splice(foxId, 1);
+            console.log('Supprimer renard n°', foxId);
         }
     }
 }
-
+/*
 function despawnFox(fox) {
     for (let appleId in apples) {
         if (
