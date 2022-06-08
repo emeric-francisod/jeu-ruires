@@ -4,7 +4,7 @@ class Character extends Entity {
         this.nextPosition = createVector(x, y);
         this.orientation = 0;
         this.nextOrientation = 0;
-        this.speed = 5;
+        this.speed = settings.speed;
         this.velocity = createVector(0, 0);
         this.calculateVelocity();
     }

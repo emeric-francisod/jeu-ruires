@@ -13,6 +13,7 @@ const snakeSettings = {
     scoreIncreaseRate: 10,
     width: 1.8 * SETTINGS.gridSize,
     height: 0.9 * SETTINGS.gridSize,
+    speed: 5,
 };
 
 const foxSettings = {
@@ -23,8 +24,10 @@ const foxSettings = {
     minSpawnRadius: 7,
     maxSpawnRadius: SETTINGS.width / SETTINGS.gridSize,
     despawnRadius: (SETTINGS.width * 2) / SETTINGS.gridSize,
+    flightRadius: 7,
     minScorePercentage: 1,
     maxScorePercentage: 15,
+    speed: 4.5,
 };
 
 const mapSettings = {

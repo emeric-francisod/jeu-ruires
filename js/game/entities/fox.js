@@ -2,6 +2,7 @@ class Fox extends Character {
     constructor(x, y, settings) {
         super(x, y, settings);
         this.scorePercentage = this.generateScorePercentage(settings.minScorePercentage, settings.maxScorePercentage);
+        this.stepToDo = 0;
     }
 
     render() {
@@ -16,5 +17,16 @@ class Fox extends Character {
 
     generateScorePercentage(min, max) {
         return randomNormal(min, max);
+    }
+
+    manageCollisions(entities = []) {
+        let collisionEffects = false;
+        entities.forEach((entity) => {
+            if (entity instanceof MountainTile || entity instanceof WaterTile) {
+                collisionEffects = true;
+                this.stepToDo = 0;
+            }
+        });
+        return collisionEffects;
     }
 }

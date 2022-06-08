@@ -1,5 +1,4 @@
 function updateCharacters() {
-    updateSnake();
     snake.looseEnergy();
     snake.winPoints();
 
@@ -11,6 +10,9 @@ function updateCharacters() {
     if (randomSpawnDecider <= 1 / (SETTINGS.tickSpeed * foxSettings.spawnRate)) {
         createFox();
     }
+
+    updateSnake();
+    foxUpdate();
 
     despawnApples();
     despawnFoxes();
