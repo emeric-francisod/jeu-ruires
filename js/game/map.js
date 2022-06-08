@@ -11,6 +11,7 @@ class Map {
             initialMapLoadingArea = 1,
         }
     ) {
+        noiseSeed(Date.now());
         this.perlinSettings = {
             zoom: perlinZoom,
             originShift: perlinOriginShift,
