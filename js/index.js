@@ -93,6 +93,20 @@ function setup() {
         ),
         'message'
     );
+    guis.failMessage.addComponent(
+        new Message(
+            SETTINGS.width / 2,
+            SETTINGS.height,
+            'Score: 0',
+            25,
+            color(295, 10, 95),
+            'bottom',
+            'center',
+            false,
+            SETTINGS.width * 0.9
+        ),
+        'endScore'
+    );
 }
 
 function draw() {
