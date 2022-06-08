@@ -127,6 +127,9 @@ function resetGame() {
     resetSnake();
     resetFailUI();
     resetGameUi();
+    if (!isLooping()) {
+        loop();
+    }
 }
 
 function setup() {
@@ -140,9 +143,14 @@ function setup() {
 
 function draw() {
     if (snake.isCaptured()) {
+        let bestScore = getItem('bestScore');
+        if (!bestScore || bestScore < snake.score) {
+            storeItem('bestScore', round(snake.score));
+        }
         renderGame();
         updateFailMessageGUI();
         renderFailMessage();
+        noLoop();
     } else {
         background(75);
         updateCharacters();

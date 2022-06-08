@@ -5,5 +5,7 @@ function updateGameGUI() {
 
 function updateFailMessageGUI() {
     guis.failMessage.components.message.setMessage(snake.stateMessage);
-    guis.failMessage.components.endScore.setMessage(`Score: ${round(snake.score)}`);
+    guis.failMessage.components.endScore.setMessage(
+        `Score: ${round(snake.score)}, Meilleur score: ${getItem('bestScore')}`
+    );
 }
