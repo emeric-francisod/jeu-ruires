@@ -43,11 +43,7 @@ let actionnedKeys = {
     space: false,
 };
 
-function setup() {
-    createCanvas(SETTINGS.width, SETTINGS.height);
-    console.log('start');
-    frameRate(SETTINGS.tickSpeed);
-    colorMode(HSB);
+function resetSnake() {
     let spawnPoint = false;
     do {
         gameMap = new Map(SETTINGS.width, SETTINGS.height, mapSettings);
@@ -55,16 +51,34 @@ function setup() {
     } while (!spawnPoint);
     console.log(spawnPoint.x, spawnPoint.y);
     snake = new Snake(spawnPoint.x, spawnPoint.y, snakeSettings);
+}
 
+function resetGameUi() {
     guis.inGameGui = new GUI();
     guis.inGameGui.addComponent(new HealthBar(20, 15, 100, 15, snakeSettings.maxEnergy), 'health');
     guis.inGameGui.addComponent(
         new Message(SETTINGS.width - 20, 15, 'Score: ', 25, 'white', 'top', 'right', true, 200),
         'score'
     );
+}
 
+function resetFailUI() {
     let failMessageBackgroundColor = color(290, 95, 5, 0.7);
     guis.failMessage = new GUI(failMessageBackgroundColor);
+    guis.failMessage.addComponent(
+        new Message(
+            SETTINGS.width / 2,
+            SETTINGS.height * 0.05,
+            "Pour recommencer, appuie sur la touche 'r'.",
+            16,
+            color(295, 10, 95),
+            'top',
+            'center',
+            false,
+            SETTINGS.width * 0.9
+        ),
+        'restartInstructions'
+    );
     guis.failMessage.addComponent(
         new Message(
             SETTINGS.width / 2,
@@ -96,7 +110,7 @@ function setup() {
     guis.failMessage.addComponent(
         new Message(
             SETTINGS.width / 2,
-            SETTINGS.height,
+            SETTINGS.height * 0.95,
             'Score: 0',
             25,
             color(295, 10, 95),
@@ -107,6 +121,21 @@ function setup() {
         ),
         'endScore'
     );
+}
+
+function resetGame() {
+    resetSnake();
+    resetFailUI();
+    resetGameUi();
+}
+
+function setup() {
+    createCanvas(SETTINGS.width, SETTINGS.height);
+    console.log('start');
+    frameRate(SETTINGS.tickSpeed);
+    colorMode(HSB);
+
+    resetGame();
 }
 
 function draw() {
@@ -125,8 +154,9 @@ function draw() {
 
 function keyPressed() {
     actionnedKeys.space = key === ' ';
-    if (key === 'a') {
-        createApple();
+    if (key === 'r' && snake.isCaptured()) {
+        console.log('restart');
+        resetGame();
     }
     return false;
 }
