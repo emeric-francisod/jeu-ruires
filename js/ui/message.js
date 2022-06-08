@@ -47,6 +47,12 @@ class Message extends GuiComponent {
         textAlign(this.align.horizontal, this.align.vertical);
         textSize(this.size);
         textStyle(this.style);
-        text(this.message, this.position.x - this.maxWidth / 2, this.position.y, this.maxWidth);
+        switch (this.align.horizontal) {
+            case CENTER:
+                text(this.message, this.position.x, this.position.y, this.maxWidth);
+                break;
+            default:
+                text(this.message, this.position.x - this.maxWidth / 2, this.position.y, this.maxWidth);
+        }
     }
 }
