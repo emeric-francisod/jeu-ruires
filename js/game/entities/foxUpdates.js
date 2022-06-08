@@ -28,16 +28,39 @@ function despawnFoxes() {
         }
     }
 }
-/*
+
 function despawnFox(fox) {
-    for (let appleId in apples) {
+    for (let foxId in foxes) {
         if (
-            apple.x === apples[appleId].x &&
-            apple.y === apples[appleId].y &&
-            apple.nutritiveValue === apples[appleId].nutritiveValue
+            fox.x === foxes[foxId].x &&
+            fox.y === foxes[foxId].y &&
+            fox.scorePercentage === foxes[foxId].scorePercentage
         ) {
-            apples.splice(appleId, 1);
-            console.log('Supprimer pomme n°', appleId, 'manuellement');
+            foxes.splice(foxId, 1);
+            console.log('Supprimer renard n°', foxId, 'manuellement');
         }
     }
-} */
+}
+
+function checkFoxCollisions(character) {
+    let foxCollisions = [];
+    foxes.forEach((fox) => {
+        if (
+            circleCollision(
+                {
+                    c1x: character.x,
+                    c1y: character.y,
+                    r1: character.size.outRadius,
+                },
+                {
+                    c2x: fox.x,
+                    c2y: fox.y,
+                    r2: fox.size.outRadius,
+                }
+            )
+        ) {
+            foxCollisions.push(fox);
+        }
+    });
+    return foxCollisions;
+}

@@ -68,6 +68,11 @@ class Snake extends Character {
                 collisionEffects = false;
                 this.eat(entity);
             }
+            if (entity instanceof Fox) {
+                collisionEffects = false;
+                this.winPoints((this.score * entity.scorePercentage) / 100);
+                despawnFox(entity);
+            }
         });
         return collisionEffects;
     }

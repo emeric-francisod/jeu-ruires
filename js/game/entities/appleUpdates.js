@@ -49,3 +49,26 @@ function despawnApple(apple) {
         }
     }
 }
+
+function checkAppleCollisions(character) {
+    let appleCollisions = [];
+    apples.forEach((apple) => {
+        if (
+            circleCollision(
+                {
+                    c1x: character.x,
+                    c1y: character.y,
+                    r1: character.size.outRadius,
+                },
+                {
+                    c2x: apple.x,
+                    c2y: apple.y,
+                    r2: apple.size.outRadius,
+                }
+            )
+        ) {
+            appleCollisions.push(apple);
+        }
+    });
+    return appleCollisions;
+}
