@@ -14,10 +14,17 @@ function renderApples() {
     }
 }
 
+function renderFoxes() {
+    for (let fox of foxes) {
+        fox.render();
+    }
+}
+
 function renderGame() {
     centerOnSnake();
     gameMap.render(snake.x, snake.y);
     renderApples();
+    renderFoxes();
     snake.render();
 }
 

@@ -42,9 +42,9 @@ class GroundTile extends Tile {
     constructor(x, y, size, value) {
         super(x, y, size, value);
         this.colorParameters = {
-            hue: [64, 93, 0.07],
-            saturation: [47, 87, 0.03],
-            value: [93, 67, 0.01],
+            hue: [55, 85, 0.07],
+            saturation: [36, 70, 0.03],
+            value: [95, 75, 0.01],
         };
         this.setColor();
     }

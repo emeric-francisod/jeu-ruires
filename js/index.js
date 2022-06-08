@@ -15,6 +15,18 @@ const snakeSettings = {
     height: 0.9 * SETTINGS.gridSize,
 };
 
+const foxSettings = {
+    width: 1.4 * SETTINGS.gridSize,
+    height: 1.2 * SETTINGS.gridSize,
+    spawnRate: 0.5,
+    spawnCap: 10,
+    minSpawnRadius: 7,
+    maxSpawnRadius: SETTINGS.width / SETTINGS.gridSize,
+    despawnRadius: (SETTINGS.width * 2) / SETTINGS.gridSize,
+    minScorePercentage: 1,
+    maxScorePercentage: 15,
+};
+
 const mapSettings = {
     gridSize: SETTINGS.gridSize,
     perlinZoom: 0.001,
@@ -25,7 +37,7 @@ const mapSettings = {
 
 const appleSettings = {
     size: SETTINGS.gridSize * 0.8,
-    spawnRate: 1,
+    spawnRate: 0.5,
     spawnCap: 10,
     minSpawnRadius: 5,
     maxSpawnRadius: SETTINGS.width / SETTINGS.gridSize,
@@ -38,6 +50,8 @@ let gameMap;
 let snake;
 let guis = {};
 let apples = [];
+let foxes = [];
+let chickens = [];
 
 let actionnedKeys = {
     space: false,
@@ -51,6 +65,12 @@ function resetSnake() {
     } while (!spawnPoint);
     console.log(spawnPoint.x, spawnPoint.y);
     snake = new Snake(spawnPoint.x, spawnPoint.y, snakeSettings);
+}
+
+function resetEntities() {
+    apples = [];
+    foxes = [];
+    chickens = [];
 }
 
 function resetGameUi() {
@@ -127,6 +147,7 @@ function resetGame() {
     resetSnake();
     resetFailUI();
     resetGameUi();
+    resetEntities();
     if (!isLooping()) {
         loop();
     }

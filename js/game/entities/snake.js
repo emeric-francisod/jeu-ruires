@@ -17,7 +17,7 @@ class Snake extends Character {
         translate(this.x, this.y);
         rotate(-this.orientation);
         noStroke();
-        fill(0, 100, 50);
+        fill(139, 91, 36);
         rect(0, 0, this.size.width, this.size.height);
         //circle(0, 0, 3);
         pop();
