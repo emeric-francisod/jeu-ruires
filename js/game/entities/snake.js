@@ -1,12 +1,6 @@
-class Snake extends Entity {
+class Snake extends Character {
     constructor(x, y, settings, score = 0) {
-        super(x, y, settings.width, settings.height);
-        this.nextPosition = createVector(x, y);
-        this.orientation = 0;
-        this.nextOrientation = 0;
-        this.speed = 5;
-        this.velocity = createVector(0, 0);
-        this.calculateVelocity();
+        super(x, y, settings);
         this.state = 'alive';
         this.stateMessage = '';
 
@@ -18,14 +12,6 @@ class Snake extends Entity {
         this.scoreIncreaseRate = settings.scoreIncreaseRate;
     }
 
-    get nextX() {
-        return this.nextPosition.x;
-    }
-
-    get nextY() {
-        return this.nextPosition.y;
-    }
-
     render() {
         push();
         translate(this.x, this.y);
@@ -35,37 +21,6 @@ class Snake extends Entity {
         rect(0, 0, this.size.width, this.size.height);
         //circle(0, 0, 3);
         pop();
-    }
-
-    moveForward(t) {
-        this.nextPosition.x += this.velocity.x * t;
-        this.nextPosition.y += this.velocity.y * t;
-    }
-
-    confirmPosition(isConfirmed = true) {
-        if (isConfirmed) {
-            this.position.x = this.nextPosition.x;
-            this.position.y = this.nextPosition.y;
-        } else {
-            this.nextPosition.x = this.position.x;
-            this.nextPosition.y = this.position.y;
-        }
-    }
-
-    rotate(angle) {
-        this.nextOrientation = angle;
-    }
-
-    confirmAngle(isConfirmed = true) {
-        if (isConfirmed) {
-            this.orientation = this.nextOrientation;
-        } else {
-            this.nextOrientation = this.orientation;
-        }
-    }
-
-    calculateVelocity() {
-        this.velocity = p5.Vector.fromAngle(-this.orientation, this.speed);
     }
 
     captured(message = '') {
