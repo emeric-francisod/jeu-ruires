@@ -46,7 +46,7 @@ function chickenRotationControl(chicken) {
         let snakeVector = snake.position;
         let chickenVector = chicken.position;
         let snakeChickenVector = p5.Vector.sub(chickenVector, snakeVector);
-        chicken.rotate(snakeChickenVector.heading());
+        chicken.rotate(-snakeChickenVector.heading() + PI);
     } else if (chicken.stepToDo <= 0) {
         chicken.rotate(random(0, TWO_PI));
         chicken.stepToDo = round(random(0, SETTINGS.tickSpeed * 3));

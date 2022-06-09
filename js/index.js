@@ -9,7 +9,7 @@ const SETTINGS = {
 
 const snakeSettings = {
     maxEnergy: 100,
-    energyDepletionRate: 20,
+    energyDepletionRate: 60,
     scoreIncreaseRate: 10,
     width: 1.8 * SETTINGS.gridSize,
     height: 0.9 * SETTINGS.gridSize,
@@ -20,13 +20,13 @@ const foxSettings = {
     width: 1.4 * SETTINGS.gridSize,
     height: 1.2 * SETTINGS.gridSize,
     spawnRate: 3,
-    spawnCap: 7,
+    spawnCap: 10,
     minSpawnRadius: 7,
     maxSpawnRadius: SETTINGS.width / SETTINGS.gridSize,
     despawnRadius: (SETTINGS.width * 2) / SETTINGS.gridSize,
     flightRadius: 7,
     minScorePercentage: 1,
-    maxScorePercentage: 15,
+    maxScorePercentage: 20,
     speed: 3,
 };
 
@@ -34,12 +34,12 @@ const chickenSettings = {
     width: 1.4 * SETTINGS.gridSize,
     height: 1.2 * SETTINGS.gridSize,
     spawnRate: 3,
-    spawnCap: 7,
+    spawnCap: 10,
     minSpawnRadius: 7,
     maxSpawnRadius: SETTINGS.width / SETTINGS.gridSize,
     despawnRadius: (SETTINGS.width * 2) / SETTINGS.gridSize,
     attackRadius: 20,
-    speed: 4,
+    speed: 2,
 };
 
 const mapSettings = {
@@ -58,7 +58,7 @@ const appleSettings = {
     maxSpawnRadius: SETTINGS.width / 2 / SETTINGS.gridSize,
     despawnRadius: (SETTINGS.width * 2) / SETTINGS.gridSize,
     minNutritiveValue: 0,
-    maxNutritiveValue: snakeSettings.maxEnergy * 0.33,
+    maxNutritiveValue: snakeSettings.maxEnergy * 0.3,
 };
 
 let gameMap;

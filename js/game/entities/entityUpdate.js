@@ -21,7 +21,7 @@ function updateCharacters() {
 
     despawnApples();
     despawnFoxes();
-    despawnChickens;
+    despawnChickens();
 }
 
 function checkCollisions(character) {
