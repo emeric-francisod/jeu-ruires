@@ -32,10 +32,19 @@ class Snake extends Character {
         return this.state === 'captured';
     }
 
-    looseEnergy() {
-        this.energy -= this.maxEnergy / (this.energyDepletionRate * SETTINGS.tickSpeed);
+    looseEnergy(dammage = null) {
+        let chickenAttack = false;
+        if (dammage === null) {
+            this.energy -= this.maxEnergy / (this.energyDepletionRate * SETTINGS.tickSpeed);
+        } else {
+            this.energy -= dammage;
+            chickenAttack = true;
+        }
         if (this.energy <= 0) {
-            this.captured("Tu n'as pas la force de continuer. Pense à manger des pommes, c'est bon les pommes.");
+            let message = chickenAttack
+                ? "Une poule a fini par t'attraper. Souvient toi, ce sont des animaux dangereux."
+                : "Tu n'as pas la force de continuer. Pense à manger des pommes, c'est bon les pommes.";
+            this.captured(message);
         }
     }
 
@@ -72,6 +81,11 @@ class Snake extends Character {
                 collisionEffects = false;
                 this.winPoints((this.score * entity.scorePercentage) / 100);
                 despawnFox(entity);
+            }
+            if (entity instanceof Chicken) {
+                collisionEffects = false;
+                this.looseEnergy(entity.dammage);
+                despawnChicken(entity);
             }
         });
         return collisionEffects;

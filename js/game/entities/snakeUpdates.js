@@ -5,18 +5,25 @@ function updateSnake() {
 
 function snakeMoveControl() {
     snake.calculateVelocity();
-    for (let t = 0; t <= 1; t += SETTINGS.movementCalculationPrecision) {
-        if (actionnedKeys.space) {
+    if (actionnedKeys.space) {
+        for (let t = 0; t <= 1; t += SETTINGS.movementCalculationPrecision) {
             snake.moveForward(SETTINGS.movementCalculationPrecision);
-            let collisions = checkCollisions(snake);
-            let collisionsEffects = snake.manageCollisions(collisions);
+            let collisionsEffects = snakeCollisions();
             if (collisionsEffects) {
                 snake.confirmPosition(false);
                 break;
             }
             snake.confirmPosition();
         }
+    } else {
+        snakeCollisions();
     }
+}
+
+function snakeCollisions() {
+    let collisions = checkCollisions(snake);
+    let collisionsEffects = snake.manageCollisions(collisions);
+    return collisionsEffects;
 }
 
 function snakeRotationControl() {
@@ -42,8 +49,7 @@ function snakeRotationControl() {
         }
 
         snake.rotate(currentAngle);
-        let collisions = checkCollisions(snake);
-        let collisionsEffects = snake.manageCollisions(collisions);
+        let collisionsEffects = snakeCollisions();
         if (collisionsEffects) {
             snake.confirmAngle(false);
             continue;

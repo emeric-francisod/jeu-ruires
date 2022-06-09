@@ -1,6 +1,7 @@
 class Chicken extends Character {
     constructor(x, y, settings) {
         super(x, y, settings);
+        this.dammage = this.generateDammage(settings.minDammage, settings.maxDammage);
         this.stepToDo = 0;
     }
 
@@ -12,6 +13,10 @@ class Chicken extends Character {
         fill(291, 100, 44);
         rect(0, 0, this.size.width, this.size.height);
         pop();
+    }
+
+    generateDammage(min, max) {
+        return randomNormal(min, max);
     }
 
     manageCollisions(entities = []) {

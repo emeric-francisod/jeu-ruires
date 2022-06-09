@@ -39,6 +39,8 @@ const chickenSettings = {
     maxSpawnRadius: SETTINGS.width / SETTINGS.gridSize,
     despawnRadius: (SETTINGS.width * 2) / SETTINGS.gridSize,
     attackRadius: 20,
+    minDammage: 1,
+    maxDammage: snakeSettings.maxEnergy * 0.3,
     speed: 2,
 };
 
