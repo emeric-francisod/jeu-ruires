@@ -10,12 +10,18 @@ function updateCharacters() {
     if (randomSpawnDecider <= 1 / (SETTINGS.tickSpeed * foxSettings.spawnRate)) {
         createFox();
     }
+    randomSpawnDecider = random();
+    if (randomSpawnDecider <= 1 / (SETTINGS.tickSpeed * foxSettings.spawnRate)) {
+        createChicken();
+    }
 
     updateSnake();
     foxUpdate();
+    chickenUpdate();
 
     despawnApples();
     despawnFoxes();
+    despawnChickens;
 }
 
 function checkCollisions(character) {
@@ -27,6 +33,7 @@ function checkCollisions(character) {
 function checkEntityCollisions(character) {
     let entityCollisions = checkAppleCollisions(character);
     entityCollisions = entityCollisions.concat(checkFoxCollisions(character));
+    entityCollisions = entityCollisions.concat(checkChickenCollisions(character));
     return entityCollisions;
 }
 

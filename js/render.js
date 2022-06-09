@@ -20,11 +20,18 @@ function renderFoxes() {
     }
 }
 
+function renderChickens() {
+    for (let chicken of chickens) {
+        chicken.render();
+    }
+}
+
 function renderGame() {
     centerOnSnake();
     gameMap.render(snake.x, snake.y);
     renderApples();
     renderFoxes();
+    renderChickens();
     snake.render();
 }
 

@@ -30,6 +30,18 @@ const foxSettings = {
     speed: 3,
 };
 
+const chickenSettings = {
+    width: 1.4 * SETTINGS.gridSize,
+    height: 1.2 * SETTINGS.gridSize,
+    spawnRate: 3,
+    spawnCap: 7,
+    minSpawnRadius: 7,
+    maxSpawnRadius: SETTINGS.width / SETTINGS.gridSize,
+    despawnRadius: (SETTINGS.width * 2) / SETTINGS.gridSize,
+    attackRadius: 20,
+    speed: 4,
+};
+
 const mapSettings = {
     gridSize: SETTINGS.gridSize,
     perlinZoom: 0.001,

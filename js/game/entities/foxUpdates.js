@@ -32,8 +32,8 @@ function foxMoveControl(fox) {
             break;
         }
         fox.confirmPosition();
-        fox.stepToDo--;
     }
+    fox.stepToDo--;
 }
 
 function foxRotationControl(fox) {
@@ -49,7 +49,7 @@ function foxRotationControl(fox) {
         fox.rotate(-snakeFoxVector.heading());
     } else if (fox.stepToDo <= 0) {
         fox.rotate(random(0, TWO_PI));
-        fox.stepToDo = round(random(0, SETTINGS.tickSpeed * 10));
+        fox.stepToDo = round(random(0, SETTINGS.tickSpeed * 3));
     }
 
     fox.confirmAngle();
