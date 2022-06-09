@@ -3,8 +3,8 @@ const SETTINGS = {
     height: 500,
     tickSpeed: 24,
     gridSize: 10,
-    movementCalculationPrecision: 0.05,
-    rotationCalculationPrecision: Math.PI / 360,
+    movementCalculationPrecision: 0.1,
+    rotationCalculationPrecision: Math.PI / 180,
 };
 
 const snakeSettings = {
@@ -165,6 +165,7 @@ function resetGame() {
     resetFailUI();
     resetGameUi();
     resetEntities();
+    resetSettings();
     if (!isLooping()) {
         loop();
     }
@@ -191,6 +192,7 @@ function draw() {
         noLoop();
     } else {
         background(75);
+        updateSettings();
         updateCharacters();
         updateGameGUI();
         renderGame();
