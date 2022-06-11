@@ -28,16 +28,16 @@ function growthFactor(x, a, b, t) {
 }
 
 function updateMaxEnergy() {
-    let slope = slopeByDouble(snakeSettings.maxEnergy, 180);
+    let slope = slopeByDouble(snakeSettings.maxEnergy, 240);
     snake.setMaxEnergy(affine(gameLength, slope, snake.initialMaxEnergy));
 }
 
 function updateScoreIncreaseRate() {
-    snake.setScoreIncreaseRate(growthFactor(gameLength, snakeSettings.scoreIncreaseRate, 2, 10 * SETTINGS.tickSpeed));
+    snake.setScoreIncreaseRate(growthFactor(gameLength, snakeSettings.scoreIncreaseRate, 2, 30 * SETTINGS.tickSpeed));
 }
 
 function updateSpeeds() {
-    let slope = slopeByDouble(snakeSettings.speed, 120);
+    let slope = slopeByDouble(snakeSettings.speed, 180);
     snake.setSpeed(affine(gameLength, slope, snakeSettings.speed));
     foxSettings.speed =
         foxSettings.speed >= snake.speed * 0.9
@@ -63,12 +63,12 @@ function updateSpawnRates() {
 function updateSpawnCaps() {
     let slope = slopeByOrigin(foxSettings.initialSpawnCap, 2, 600);
     foxSettings.spawnCap = foxSettings.spawnCap <= 2 ? 2 : ceil(affine(gameLength, slope, foxSettings.initialSpawnCap));
-    slope = slopeByDouble(chickenSettings.initialSpawnCap, 600);
+    slope = slopeByDouble(chickenSettings.initialSpawnCap, 500);
     chickenSettings.spawnCap =
         chickenSettings.spawnCap >= 5 * chickenSettings.initialSpawnCap
             ? 5 * chickenSettings.initialSpawnCap
             : ceil(affine(gameLength, slope, chickenSettings.initialSpawnCap));
-    slope = slopeByOrigin(appleSettings.initialSpawnCap, 5, 600);
+    slope = slopeByOrigin(appleSettings.initialSpawnCap, 5, 400);
     appleSettings.spawnCap =
         appleSettings.spawnCap <= 5 ? 5 : ceil(affine(gameLength, slope, appleSettings.initialSpawnCap));
 }
