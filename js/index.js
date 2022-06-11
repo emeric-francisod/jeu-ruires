@@ -22,6 +22,7 @@ const foxSettings = {
     initialSpawnRate: 3,
     spawnRate: 3,
     spawnCap: 10,
+    initialSpawnCap: 10,
     minSpawnRadius: 7,
     maxSpawnRadius: SETTINGS.width / SETTINGS.gridSize,
     despawnRadius: (SETTINGS.width * 2) / SETTINGS.gridSize,
@@ -38,6 +39,7 @@ const chickenSettings = {
     initialSpawnRate: 3,
     spawnRate: 3,
     spawnCap: 10,
+    initialSpawnCap: 10,
     minSpawnRadius: 7,
     maxSpawnRadius: SETTINGS.width / SETTINGS.gridSize,
     despawnRadius: (SETTINGS.width * 2) / SETTINGS.gridSize,
@@ -61,6 +63,7 @@ const appleSettings = {
     initialSpawnRate: 2,
     spawnRate: 2,
     spawnCap: 10,
+    initialSpawnCap: 10,
     minSpawnRadius: 5,
     maxSpawnRadius: SETTINGS.width / 2 / SETTINGS.gridSize,
     despawnRadius: (SETTINGS.width * 2) / SETTINGS.gridSize,
@@ -214,6 +217,14 @@ function keyPressed() {
     if (key === 'r' && snake.isCaptured()) {
         console.log('restart');
         resetGame();
+    }
+
+    if (key === 'c') {
+        console.group('Caps');
+        console.log('Chicken', chickenSettings.initialSpawnCap, chickenSettings.spawnCap);
+        console.log('Fox', foxSettings.initialSpawnCap, foxSettings.spawnCap);
+        console.log('Apple', appleSettings.initialSpawnCap, appleSettings.spawnCap);
+        console.groupEnd();
     }
     return false;
 }

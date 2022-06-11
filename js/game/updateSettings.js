@@ -65,7 +65,18 @@ function updateSpawnRates() {
         appleSettings.spawnRate <= 0.7 ? 0.7 : affine(gameLength, slope, appleSettings.initialSpawnRate);
 }
 
-function updateSpawnCaps() {}
+function updateSpawnCaps() {
+    let slope = slopeByOrigin(foxSettings.initialSpawnCap, 2, 30);
+    foxSettings.spawnCap = foxSettings.spawnCap <= 2 ? 2 : ceil(affine(gameLength, slope, foxSettings.initialSpawnCap));
+    slope = slopeByDouble(chickenSettings.initialSpawnCap, 30);
+    chickenSettings.spawnCap =
+        chickenSettings.spawnCap >= 5 * chickenSettings.initialSpawnCap
+            ? 5 * chickenSettings.initialSpawnCap
+            : ceil(affine(gameLength, slope, chickenSettings.initialSpawnCap));
+    slope = slopeByOrigin(appleSettings.initialSpawnCap, 5, 30);
+    appleSettings.spawnCap =
+        appleSettings.spawnCap <= 5 ? 5 : ceil(affine(gameLength, slope, appleSettings.initialSpawnCap));
+}
 
 function resetSettings() {
     foxSettings.spawnCap = 10;
@@ -76,6 +87,5 @@ function resetSettings() {
     chickenSettings.minDammage = 1;
     chickenSettings.maxDammage = snakeSettings.maxEnergy * 0.3;
 
-    appleSettings.spawnRate = 2;
     appleSettings.spawnCap = 10;
 }
