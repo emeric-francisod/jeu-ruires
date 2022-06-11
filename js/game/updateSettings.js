@@ -1,6 +1,7 @@
 function updateSettings() {
     updateMaxEnergy();
     updateScoreIncreaseRate();
+    updateSpeeds();
 }
 
 function negativeExponential(x) {
@@ -27,6 +28,20 @@ function updateMaxEnergy() {
 
 function updateScoreIncreaseRate() {
     snake.setScoreIncreaseRate(growthFactor(gameLength, snakeSettings.scoreIncreaseRate, 2, 10 * SETTINGS.tickSpeed));
+}
+
+function updateSpeeds() {
+    let timeToFirstDouble = 120 * SETTINGS.tickSpeed;
+    let slope = snakeSettings.speed / timeToFirstDouble;
+    snake.setSpeed(affine(gameLength, slope, snakeSettings.speed));
+    foxSettings.speed =
+        foxSettings.speed >= snake.speed * 0.9
+            ? snake.speed * 0.9
+            : affine(gameLength, slope * 1.1, foxSettings.initialSpeed);
+    chickenSettings.speed =
+        chickenSettings.speed >= snake.speed * 0.9
+            ? snake.speed * 0.9
+            : affine(gameLength, slope * 1.1, chickenSettings.initialSpeed);
 }
 
 function resetSettings() {

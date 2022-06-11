@@ -21,6 +21,10 @@ class Snake extends Character {
         this.scoreIncreaseRate = rate;
     }
 
+    setSpeed(speed) {
+        this.speed = speed;
+    }
+
     render() {
         push();
         translate(this.x, this.y);

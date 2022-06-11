@@ -27,6 +27,7 @@ const foxSettings = {
     flightRadius: 7,
     minScorePercentage: 1,
     maxScorePercentage: 20,
+    initialSpeed: 3,
     speed: 3,
 };
 
@@ -41,6 +42,7 @@ const chickenSettings = {
     attackRadius: 20,
     minDammage: 1,
     maxDammage: snakeSettings.maxEnergy * 0.3,
+    initialSpeed: 2,
     speed: 2,
 };
 
