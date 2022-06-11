@@ -13,6 +13,10 @@ class ProgressBar extends GuiComponent {
     updateValue(value) {
         this.value = value;
     }
+
+    updateMaxValue(value) {
+        this.maxValue = value;
+    }
 }
 
 class HealthBar extends ProgressBar {
@@ -36,5 +40,7 @@ class HealthBar extends ProgressBar {
         stroke(this.design.borderColor);
         strokeWeight(this.design.borderWeight);
         rect(this.position.x, this.position.y, this.size.width, this.size.height);
+
+        console.log(this.value, this.maxValue);
     }
 }

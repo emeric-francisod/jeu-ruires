@@ -1,5 +1,6 @@
 function updateGameGUI() {
     guis.inGameGui.components.health.updateValue(snake.energy);
+    guis.inGameGui.components.health.updateMaxValue(snake.maxEnergy);
     guis.inGameGui.components.score.setMessage(`Score: ${round(snake.score)}`);
 }
 

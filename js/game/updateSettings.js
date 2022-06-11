@@ -1,4 +1,24 @@
-function updateSettings() {}
+function updateSettings() {
+    updateMaxEnergy();
+}
+
+function negativeExponential(x) {
+    return -pow(Math.E, -x);
+}
+
+function easeInOut(x) {
+    return x < 0.5 ? 4 * x * x * x : 1 - pow(-2 * x + 2, 3) / 2;
+}
+
+function affine(x, a, b) {
+    return a * x + b;
+}
+
+function updateMaxEnergy() {
+    let timeToFirstDouble = 180 * SETTINGS.tickSpeed;
+    let slope = snakeSettings.maxEnergy / timeToFirstDouble;
+    snake.setMaxEnergy(affine(gameLength, slope, snake.initialMaxEnergy));
+}
 
 function resetSettings() {
     snakeSettings.maxEnergy = 100;

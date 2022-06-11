@@ -63,6 +63,8 @@ const appleSettings = {
     maxNutritiveValue: snakeSettings.maxEnergy * 0.3,
 };
 
+let gameLength = 0;
+
 let gameMap;
 let snake;
 let guis = {};
@@ -166,6 +168,7 @@ function resetGame() {
     resetGameUi();
     resetEntities();
     resetSettings();
+    gameLength = 0;
     if (!isLooping()) {
         loop();
     }
@@ -191,6 +194,7 @@ function draw() {
         renderFailMessage();
         noLoop();
     } else {
+        gameLength++;
         background(75);
         updateSettings();
         updateCharacters();

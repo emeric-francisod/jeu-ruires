@@ -4,12 +4,17 @@ class Snake extends Character {
         this.state = 'alive';
         this.stateMessage = '';
 
-        this.maxEnergy = settings.maxEnergy;
-        this.energy = this.maxEnergy;
+        this.initialMaxEnergy = settings.maxEnergy;
+        this.maxEnergy = this.initialMaxEnergy;
+        this.energy = this.initialMaxEnergy;
         this.energyDepletionRate = settings.energyDepletionRate;
 
         this.score = score;
         this.scoreIncreaseRate = settings.scoreIncreaseRate;
+    }
+
+    setMaxEnergy(maxEnergy) {
+        this.maxEnergy = maxEnergy;
     }
 
     render() {
@@ -35,7 +40,7 @@ class Snake extends Character {
     looseEnergy(dammage = null) {
         let chickenAttack = false;
         if (dammage === null) {
-            this.energy -= this.maxEnergy / (this.energyDepletionRate * SETTINGS.tickSpeed);
+            this.energy -= this.initialMaxEnergy / (this.energyDepletionRate * SETTINGS.tickSpeed);
         } else {
             this.energy -= dammage;
             chickenAttack = true;
