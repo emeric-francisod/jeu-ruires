@@ -4,14 +4,9 @@ function updateSettings() {
     updateSpeeds();
     updateSpawnRates();
     updateSpawnCaps();
-}
-
-function negativeExponential(x) {
-    return -exp(-x);
-}
-
-function easeInOut(x) {
-    return x < 0.5 ? 4 * x * x * x : 1 - pow(-2 * x + 2, 3) / 2;
+    updateAttackDammages();
+    updateAttackRadius();
+    updateFlightRadius();
 }
 
 function affine(x, a, b) {
@@ -57,7 +52,7 @@ function updateSpeeds() {
 function updateSpawnRates() {
     let slope = slopeByDouble(foxSettings.initialSpawnRate, 600);
     foxSettings.spawnRate = affine(gameLength, slope, foxSettings.initialSpawnRate);
-    slope = slopeByOrigin(chickenSettings.initialSpawnRate, 1, 180);
+    slope = slopeByOrigin(chickenSettings.initialSpawnRate, 1, 300);
     chickenSettings.spawnRate =
         chickenSettings.spawnRate <= 0.3 ? 0.3 : affine(gameLength, slope, chickenSettings.initialSpawnRate);
     slope = slopeByOrigin(appleSettings.initialSpawnRate, 1, 300);
@@ -66,26 +61,38 @@ function updateSpawnRates() {
 }
 
 function updateSpawnCaps() {
-    let slope = slopeByOrigin(foxSettings.initialSpawnCap, 2, 30);
+    let slope = slopeByOrigin(foxSettings.initialSpawnCap, 2, 600);
     foxSettings.spawnCap = foxSettings.spawnCap <= 2 ? 2 : ceil(affine(gameLength, slope, foxSettings.initialSpawnCap));
-    slope = slopeByDouble(chickenSettings.initialSpawnCap, 30);
+    slope = slopeByDouble(chickenSettings.initialSpawnCap, 600);
     chickenSettings.spawnCap =
         chickenSettings.spawnCap >= 5 * chickenSettings.initialSpawnCap
             ? 5 * chickenSettings.initialSpawnCap
             : ceil(affine(gameLength, slope, chickenSettings.initialSpawnCap));
-    slope = slopeByOrigin(appleSettings.initialSpawnCap, 5, 30);
+    slope = slopeByOrigin(appleSettings.initialSpawnCap, 5, 600);
     appleSettings.spawnCap =
         appleSettings.spawnCap <= 5 ? 5 : ceil(affine(gameLength, slope, appleSettings.initialSpawnCap));
 }
 
+function updateFlightRadius() {
+    let slope = slopeByDouble(foxSettings.initialFlightRadius, 600);
+    foxSettings.flightRadius =
+        foxSettings.flightRadius >= 30 ? 30 : affine(gameLength, slope, foxSettings.initialFlightRadius);
+}
+
+function updateAttackRadius() {
+    let slope = slopeByDouble(chickenSettings.initialAttackRadius, 200);
+    chickenSettings.attackRadius = affine(gameLength, slope, chickenSettings.initialAttackRadius);
+}
+
+function updateAttackDammages() {
+    chickenSettings.maxDammage = snake.maxEnergy * 0.3;
+}
+
 function resetSettings() {
-    foxSettings.spawnCap = 10;
     foxSettings.flightRadius = 7;
 
     chickenSettings.spawnCap = 10;
     chickenSettings.attackRadius = 20;
     chickenSettings.minDammage = 1;
     chickenSettings.maxDammage = snakeSettings.maxEnergy * 0.3;
-
-    appleSettings.spawnCap = 10;
 }
