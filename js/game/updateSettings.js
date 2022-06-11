@@ -1,9 +1,10 @@
 function updateSettings() {
     updateMaxEnergy();
+    updateScoreIncreaseRate();
 }
 
 function negativeExponential(x) {
-    return -pow(Math.E, -x);
+    return -exp(-x);
 }
 
 function easeInOut(x) {
@@ -14,10 +15,18 @@ function affine(x, a, b) {
     return a * x + b;
 }
 
+function growthFactor(x, a, b, t) {
+    return a + pow(b, x / t);
+}
+
 function updateMaxEnergy() {
     let timeToFirstDouble = 180 * SETTINGS.tickSpeed;
     let slope = snakeSettings.maxEnergy / timeToFirstDouble;
     snake.setMaxEnergy(affine(gameLength, slope, snake.initialMaxEnergy));
+}
+
+function updateScoreIncreaseRate() {
+    snake.setScoreIncreaseRate(growthFactor(gameLength, snakeSettings.scoreIncreaseRate, 2, 10 * SETTINGS.tickSpeed));
 }
 
 function resetSettings() {

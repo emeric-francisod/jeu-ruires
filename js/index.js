@@ -163,12 +163,12 @@ function resetFailUI() {
 }
 
 function resetGame() {
+    gameLength = 0;
     resetSnake();
     resetFailUI();
     resetGameUi();
     resetEntities();
-    resetSettings();
-    gameLength = 0;
+    updateSettings();
     if (!isLooping()) {
         loop();
     }

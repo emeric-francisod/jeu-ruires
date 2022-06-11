@@ -17,6 +17,10 @@ class Snake extends Character {
         this.maxEnergy = maxEnergy;
     }
 
+    setScoreIncreaseRate(rate) {
+        this.scoreIncreaseRate = rate;
+    }
+
     render() {
         push();
         translate(this.x, this.y);
