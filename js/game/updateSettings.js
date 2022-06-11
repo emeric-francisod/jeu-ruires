@@ -60,6 +60,9 @@ function updateSpawnRates() {
     slope = slopeByOrigin(chickenSettings.initialSpawnRate, 1, 180);
     chickenSettings.spawnRate =
         chickenSettings.spawnRate <= 0.3 ? 0.3 : affine(gameLength, slope, chickenSettings.initialSpawnRate);
+    slope = slopeByOrigin(appleSettings.initialSpawnRate, 1, 300);
+    appleSettings.spawnRate =
+        appleSettings.spawnRate <= 0.7 ? 0.7 : affine(gameLength, slope, appleSettings.initialSpawnRate);
 }
 
 function updateSpawnCaps() {}
