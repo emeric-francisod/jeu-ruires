@@ -2,6 +2,8 @@ function updateSettings() {
     updateMaxEnergy();
     updateScoreIncreaseRate();
     updateSpeeds();
+    updateSpawnRates();
+    updateSpawnCaps();
 }
 
 function negativeExponential(x) {
@@ -16,13 +18,22 @@ function affine(x, a, b) {
     return a * x + b;
 }
 
+function slopeByDouble(initial, time) {
+    let timeToDouble = time * SETTINGS.tickSpeed;
+    return initial / timeToDouble;
+}
+
+function slopeByOrigin(initial, final, time) {
+    let timeTick = time * SETTINGS.tickSpeed;
+    return (final - initial) / timeTick;
+}
+
 function growthFactor(x, a, b, t) {
     return a + pow(b, x / t);
 }
 
 function updateMaxEnergy() {
-    let timeToFirstDouble = 180 * SETTINGS.tickSpeed;
-    let slope = snakeSettings.maxEnergy / timeToFirstDouble;
+    let slope = slopeByDouble(snakeSettings.maxEnergy, 180);
     snake.setMaxEnergy(affine(gameLength, slope, snake.initialMaxEnergy));
 }
 
@@ -31,8 +42,7 @@ function updateScoreIncreaseRate() {
 }
 
 function updateSpeeds() {
-    let timeToFirstDouble = 120 * SETTINGS.tickSpeed;
-    let slope = snakeSettings.speed / timeToFirstDouble;
+    let slope = slopeByDouble(snakeSettings.speed, 120);
     snake.setSpeed(affine(gameLength, slope, snakeSettings.speed));
     foxSettings.speed =
         foxSettings.speed >= snake.speed * 0.9
@@ -44,12 +54,17 @@ function updateSpeeds() {
             : affine(gameLength, slope * 1.1, chickenSettings.initialSpeed);
 }
 
-function resetSettings() {
-    snakeSettings.maxEnergy = 100;
-    snakeSettings.energyDepletionRate = 60;
-    snakeSettings.scoreIncreaseRate = 10;
-    snakeSettings.speed = 5;
+function updateSpawnRates() {
+    let slope = slopeByDouble(foxSettings.initialSpawnRate, 600);
+    foxSettings.spawnRate = affine(gameLength, slope, foxSettings.initialSpawnRate);
+    slope = slopeByOrigin(chickenSettings.initialSpawnRate, 1, 180);
+    chickenSettings.spawnRate =
+        chickenSettings.spawnRate <= 0.3 ? 0.3 : affine(gameLength, slope, chickenSettings.initialSpawnRate);
+}
 
+function updateSpawnCaps() {}
+
+function resetSettings() {
     foxSettings.spawnRate = 3;
     foxSettings.spawnCap = 10;
     foxSettings.flightRadius = 7;

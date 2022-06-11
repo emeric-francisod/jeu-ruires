@@ -19,6 +19,7 @@ const snakeSettings = {
 const foxSettings = {
     width: 1.4 * SETTINGS.gridSize,
     height: 1.2 * SETTINGS.gridSize,
+    initialSpawnRate: 3,
     spawnRate: 3,
     spawnCap: 10,
     minSpawnRadius: 7,
@@ -34,6 +35,7 @@ const foxSettings = {
 const chickenSettings = {
     width: 1.4 * SETTINGS.gridSize,
     height: 1.2 * SETTINGS.gridSize,
+    initialSpawnRate: 3,
     spawnRate: 3,
     spawnCap: 10,
     minSpawnRadius: 7,
