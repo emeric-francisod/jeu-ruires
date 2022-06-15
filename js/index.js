@@ -82,6 +82,8 @@ let apples = [];
 let foxes = [];
 let chickens = [];
 
+let sprites = {};
+
 let actionnedKeys = {
     space: false,
 };
@@ -182,6 +184,24 @@ function resetGame() {
     if (!isLooping()) {
         loop();
     }
+}
+
+function preload() {
+    loadImage('./sprites/serpent-stop.png', (img) => {
+        sprites['snakeStill'] = new Sprite(img, 28, 64);
+    });
+    loadImage('./sprites/serpent-marche.png', (img) => {
+        sprites['snakeMove'] = new Sprite(img, 40, 64);
+    });
+    loadImage('./sprites/poule-marche.png', (img) => {
+        sprites['chickenMove'] = new Sprite(img, 24, 53);
+    });
+    loadImage('./sprites/renard-marche.png', (img) => {
+        sprites['foxMove'] = new Sprite(img, 20, 64);
+    });
+    loadImage('./sprites/Pomme.png', (img) => {
+        sprites['apple'] = new Sprite(img, img.width, img.height);
+    });
 }
 
 function setup() {
