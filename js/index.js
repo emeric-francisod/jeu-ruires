@@ -123,7 +123,9 @@ function resetFailUI() {
         new Message(
             SETTINGS.width / 2,
             SETTINGS.height * 0.05,
-            "Pour recommencer, appuie sur la touche 'r'.",
+            Modernizr.touchevents
+                ? 'Pour recommencer, appuie sur ton écran'
+                : "Pour recommencer, appuie sur la touche 'r'.",
             16,
             color(295, 10, 95),
             'top',
@@ -306,6 +308,31 @@ function keyPressed() {
 
 function keyReleased() {
     if (key === ' ') {
+        actionnedKeys.space = false;
+        snake.setSprite(sprites.snakeStill);
+        sounds.snakeCrawl.stop();
+        return false;
+    }
+}
+
+function touchStarted() {
+    if (isLooping() && touches.length === 1) {
+        actionnedKeys.space = true;
+        snake.setSprite(sprites.snakeMove);
+        sounds.snakeCrawl.loop();
+        return false;
+    }
+
+    if (snake.isCaptured()) {
+        actionnedKeys.space = true;
+        console.log('restart');
+        resetGame();
+        return false;
+    }
+}
+
+function touchEnded() {
+    if (touches.length === 0) {
         actionnedKeys.space = false;
         snake.setSprite(sprites.snakeStill);
         sounds.snakeCrawl.stop();
