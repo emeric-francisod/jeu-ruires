@@ -8,6 +8,7 @@ class Snake extends Character {
         this.maxEnergy = this.initialMaxEnergy;
         this.energy = this.initialMaxEnergy;
         this.energyDepletionRate = settings.energyDepletionRate;
+        this.hungry = false;
 
         this.score = score;
         this.scoreIncreaseRate = settings.scoreIncreaseRate;
@@ -54,11 +55,27 @@ class Snake extends Character {
             this.energy -= dammage;
             chickenAttack = true;
         }
+
         if (this.energy <= 0) {
-            let message = chickenAttack
-                ? "Une poule a fini par t'attraper. Souvient toi, ce sont des animaux dangereux."
-                : "Tu n'as pas la force de continuer. Pense à manger des pommes, c'est bon les pommes.";
+            let message = '';
+            if (chickenAttack) {
+                message = "Une poule a fini par t'attraper. Souviens toi, ce sont des animaux dangereux.";
+                sounds.chickenCapture.play();
+            } else {
+                message = "Tu n'as pas la force de continuer. Pense à manger des pommes, c'est bon les pommes.";
+                sounds.hungerDeath.play();
+            }
             this.captured(message);
+            return;
+        }
+
+        if (!this.hungry && this.energy / this.initialMaxEnergy <= 0.1) {
+            sounds.hungry.play();
+            this.hungry = true;
+        }
+
+        if (chickenAttack) {
+            sounds.chickenTouch.play();
         }
     }
 
@@ -75,6 +92,11 @@ class Snake extends Character {
         if (this.energy > this.maxEnergy) {
             this.energy = this.maxEnergy;
         }
+
+        if (this.hungry && this.energy / this.initialMaxEnergy > 0.1) {
+            this.hungry = false;
+        }
+        sounds.appleEat.play();
         despawnApple(apple);
     }
 
@@ -86,6 +108,7 @@ class Snake extends Character {
             }
             if (entity instanceof WaterTile) {
                 this.captured('Attention, tu ne peux pas nager!');
+                sounds.drown.play();
             }
             if (entity instanceof Apple) {
                 collisionEffects = false;
@@ -94,6 +117,7 @@ class Snake extends Character {
             if (entity instanceof Fox) {
                 collisionEffects = false;
                 this.winPoints((this.score * entity.scorePercentage) / 100);
+                sounds.score.play();
                 despawnFox(entity);
             }
             if (entity instanceof Chicken) {

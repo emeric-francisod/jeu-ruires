@@ -284,6 +284,7 @@ function keyPressed() {
     if (key === ' ') {
         actionnedKeys.space = true;
         snake.setSprite(sprites.snakeMove);
+        sounds.snakeCrawl.loop();
         return false;
     }
     if (key === 'r' && snake.isCaptured()) {
@@ -297,6 +298,7 @@ function keyReleased() {
     if (key === ' ') {
         actionnedKeys.space = false;
         snake.setSprite(sprites.snakeStill);
+        sounds.snakeCrawl.stop();
         return false;
     }
 }
