@@ -1,6 +1,6 @@
 const SETTINGS = {
-    width: window.visualViewport.width * 0.9,
-    height: window.visualViewport.height * 0.9,
+    width: window.visualViewport.width * 0.99,
+    height: window.visualViewport.height * 0.99,
     tickSpeed: 24,
     gridSize: 10,
     movementCalculationPrecision: 0.1,
