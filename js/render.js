@@ -44,3 +44,14 @@ function renderFailMessage() {
     resetCoordinates();
     guis.failMessage.render();
 }
+
+function renderMusic() {
+    if (!musics[currentMusicId].isPlaying()) {
+        currentMusicId = currentMusicId >= musics.length - 1 ? 0 : currentMusicId + 1;
+        musics[currentMusicId].play();
+    }
+}
+
+function stopMusic() {
+    musics[currentMusicId].stop();
+}

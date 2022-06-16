@@ -238,9 +238,14 @@ function soundPreload() {
 
 function musicPreload() {
     loadSound('./audio/music1.mp3', (music) => {
+        music.setVolume(0.2, 3);
         musics.push(music);
+        if (currentMusicId === null) {
+            currentMusicId = 0;
+        }
     });
     loadSound('./audio/music2.mp3', (music) => {
+        music.setVolume(0.2, 3);
         musics.push(music);
     });
 }
@@ -270,6 +275,7 @@ function draw() {
         renderGame();
         updateFailMessageGUI();
         renderFailMessage();
+        stopMusic();
         noLoop();
     } else {
         gameLength++;
@@ -279,6 +285,7 @@ function draw() {
         updateGameGUI();
         renderGame();
         renderGameUI();
+        renderMusic();
     }
 }
 
