@@ -1,6 +1,6 @@
 const SETTINGS = {
-    width: 500,
-    height: 500,
+    width: window.innerWidth * 0.9,
+    height: window.innerHeight * 0.9,
     tickSpeed: 24,
     gridSize: 10,
     movementCalculationPrecision: 0.1,
@@ -257,6 +257,7 @@ function preload() {
 }
 
 function setup() {
+    SETTINGS.gridSize = constrain(SETTINGS.width / 100, 15, 50);
     createCanvas(SETTINGS.width, SETTINGS.height);
     console.log('start');
     frameRate(SETTINGS.tickSpeed);
