@@ -61,7 +61,7 @@ const mapSettings = {
 };
 
 const appleSettings = {
-    size: SETTINGS.gridSize * 0.8,
+    size: SETTINGS.gridSize,
     initialSpawnRate: 2,
     spawnRate: 2,
     spawnCap: 10,
@@ -95,7 +95,7 @@ function resetSnake() {
         spawnPoint = gameMap.findSpawnPoint();
     } while (!spawnPoint);
     console.log(spawnPoint.x, spawnPoint.y);
-    snake = new Snake(spawnPoint.x, spawnPoint.y, snakeSettings);
+    snake = new Snake(spawnPoint.x, spawnPoint.y, snakeSettings, sprites.snakeStill);
 }
 
 function resetEntities() {
@@ -235,7 +235,10 @@ function draw() {
 }
 
 function keyPressed() {
-    actionnedKeys.space = key === ' ';
+    if (key === ' ') {
+        actionnedKeys.space = true;
+        snake.setSprite(sprites.snakeMove);
+    }
     if (key === 'r' && snake.isCaptured()) {
         console.log('restart');
         resetGame();
@@ -244,6 +247,9 @@ function keyPressed() {
 }
 
 function keyReleased() {
-    actionnedKeys.space = !key === ' ';
+    if (key === ' ') {
+        actionnedKeys.space = false;
+        snake.setSprite(sprites.snakeStill);
+    }
     return false;
 }

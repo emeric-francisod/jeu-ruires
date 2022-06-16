@@ -11,7 +11,7 @@ function createChicken() {
         true
     );
     console.log('Spawn chicken at ', spawnPoint.x, spawnPoint.y);
-    chickens.push(new Chicken(spawnPoint.x, spawnPoint.y, chickenSettings));
+    chickens.push(new Chicken(spawnPoint.x, spawnPoint.y, chickenSettings, sprites.chickenMove));
 }
 
 function chickenUpdate() {

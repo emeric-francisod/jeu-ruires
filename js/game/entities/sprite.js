@@ -11,6 +11,10 @@ class Sprite {
         this.animationId = null;
     }
 
+    clone() {
+        return new Sprite(this.image, this.spriteSize.width, this.spriteSize.height);
+    }
+
     startAnimation() {
         this.animationId = setInterval(this.nextImage.bind(this), 1000 / 8);
     }
@@ -24,14 +28,16 @@ class Sprite {
         return this.animationId !== null;
     }
 
-    displayImage(x, y, w, h) {
+    displayImage(x, y, w = null, h = null) {
+        let width = w === null ? this.spriteSize.width : w;
+        let height = h === null ? (this.spriteSize.height * width) / this.spriteSize.width : h;
         imageMode(CENTER);
         image(
             this.image,
             x,
             y,
-            w,
-            h,
+            width,
+            height,
             this.spriteNo * this.spriteSize.width,
             0,
             this.spriteSize.width,
@@ -41,6 +47,5 @@ class Sprite {
 
     nextImage() {
         this.spriteNo = this.spriteNo >= this.spriteNumber - 1 ? 0 : this.spriteNo + 1;
-        console.log(this.spriteNo * this.spriteSize.width);
     }
 }

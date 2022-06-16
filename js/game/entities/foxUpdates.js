@@ -11,7 +11,7 @@ function createFox() {
         true
     );
     console.log('Spawn fox at ', spawnPoint.x, spawnPoint.y);
-    foxes.push(new Fox(spawnPoint.x, spawnPoint.y, foxSettings));
+    foxes.push(new Fox(spawnPoint.x, spawnPoint.y, foxSettings, sprites.foxMove));
 }
 
 function foxUpdate() {

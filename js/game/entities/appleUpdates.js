@@ -17,7 +17,8 @@ function createApple() {
             spawnPoint.y,
             appleSettings.size,
             appleSettings.minNutritiveValue,
-            appleSettings.maxNutritiveValue
+            appleSettings.maxNutritiveValue,
+            sprites.apple
         )
     );
 }

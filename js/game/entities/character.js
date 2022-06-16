@@ -1,6 +1,6 @@
 class Character extends Entity {
-    constructor(x, y, settings) {
-        super(x, y, settings.width, settings.height);
+    constructor(x, y, settings, sprite) {
+        super(x, y, settings.width, settings.height, sprite);
         this.nextPosition = createVector(x, y);
         this.orientation = 0;
         this.nextOrientation = 0;

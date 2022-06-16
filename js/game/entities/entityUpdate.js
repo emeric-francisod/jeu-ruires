@@ -11,7 +11,7 @@ function updateCharacters() {
         createFox();
     }
     randomSpawnDecider = random();
-    if (randomSpawnDecider <= 1 / (SETTINGS.tickSpeed * foxSettings.spawnRate)) {
+    if (randomSpawnDecider <= 1 / (SETTINGS.tickSpeed * chickenSettings.spawnRate)) {
         createChicken();
     }
 
