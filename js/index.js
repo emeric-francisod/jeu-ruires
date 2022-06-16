@@ -9,7 +9,7 @@ const SETTINGS = {
 
 const snakeSettings = {
     maxEnergy: 100,
-    energyDepletionRate: 60,
+    energyDepletionRate: 45,
     scoreIncreaseRate: 10,
     width: 1.8 * SETTINGS.gridSize,
     height: 3.9 * SETTINGS.gridSize,
@@ -212,6 +212,7 @@ function soundPreload() {
         sounds['appleEat'] = sound;
     });
     loadSound('./audio/chicken buck.wav', (sound) => {
+        sound.setVolume(0.7);
         sounds['chickenTouch'] = sound;
     });
     loadSound('./audio/chicken.wav', (sound) => {
@@ -221,6 +222,7 @@ function soundPreload() {
         sounds['drown'] = sound;
     });
     loadSound('./audio/hunger-death.mp3', (sound) => {
+        sound.setVolume(0.4);
         sounds['hungerDeath'] = sound;
     });
     loadSound('./audio/hungry.wav', (sound) => {
