@@ -12,7 +12,7 @@ class Chicken extends Character {
         /* noStroke();
         fill(291, 100, 44);
         rect(0, 0, this.size.width, this.size.height); */
-        this.sprite.displayImage(0, 0, this.size.width);
+        this.sprite.displayImage(0, 0, this.size.height);
         pop();
     }
 

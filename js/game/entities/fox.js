@@ -12,7 +12,7 @@ class Fox extends Character {
         /* noStroke();
         fill(0, 100, 50);
         rect(0, 0, this.size.width, this.size.height); */
-        this.sprite.displayImage(0, 0, this.size.width);
+        this.sprite.displayImage(0, 0, this.size.height);
         pop();
     }
 

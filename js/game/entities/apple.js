@@ -9,7 +9,7 @@ class Apple extends Entity {
         /* noStroke();
         fill(0, 100, 93);
         circle(this.position.x, this.position.y, this.size.width); */
-        this.sprite.displayImage(this.position.x, this.position.y, this.size.width);
+        this.sprite.displayImage(this.position.x, this.position.y, this.size.height);
     }
 
     generateNutritiveValue(min, max) {

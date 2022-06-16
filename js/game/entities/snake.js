@@ -32,7 +32,7 @@ class Snake extends Character {
         /* noStroke();
         fill(139, 91, 36);
         rect(0, 0, this.size.width, this.size.height); */
-        this.sprite.displayImage(0, 0, this.size.width);
+        this.sprite.displayImage(0, 0, this.size.height);
         //circle(0, 0, 3);
         pop();
     }

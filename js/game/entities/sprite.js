@@ -28,9 +28,9 @@ class Sprite {
         return this.animationId !== null;
     }
 
-    displayImage(x, y, w = null, h = null) {
-        let width = w === null ? this.spriteSize.width : w;
-        let height = h === null ? (this.spriteSize.height * width) / this.spriteSize.width : h;
+    displayImage(x, y, h = null, w = null) {
+        let height = h === null ? this.spriteSize.height : h;
+        let width = w === null ? (this.spriteSize.width * height) / this.spriteSize.height : w;
         imageMode(CENTER);
         image(
             this.image,

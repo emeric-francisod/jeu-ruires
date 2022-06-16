@@ -12,13 +12,13 @@ const snakeSettings = {
     energyDepletionRate: 60,
     scoreIncreaseRate: 10,
     width: 1.8 * SETTINGS.gridSize,
-    height: 0.9 * SETTINGS.gridSize,
+    height: 3.9 * SETTINGS.gridSize,
     speed: 5,
 };
 
 const foxSettings = {
     width: 1.4 * SETTINGS.gridSize,
-    height: 1.2 * SETTINGS.gridSize,
+    height: 4.5 * SETTINGS.gridSize,
     initialSpawnRate: 3,
     spawnRate: 3,
     spawnCap: 10,
@@ -36,7 +36,7 @@ const foxSettings = {
 
 const chickenSettings = {
     width: 1.4 * SETTINGS.gridSize,
-    height: 1.2 * SETTINGS.gridSize,
+    height: 3 * SETTINGS.gridSize,
     initialSpawnRate: 6,
     spawnRate: 6,
     spawnCap: 5,
@@ -55,8 +55,8 @@ const chickenSettings = {
 const mapSettings = {
     gridSize: SETTINGS.gridSize,
     perlinZoom: 0.001,
-    seaLevel: 0.4,
-    mountainLevel: 0.6,
+    seaLevel: 0.36,
+    mountainLevel: 0.67,
     perlinOriginShift: 1000000,
 };
 
