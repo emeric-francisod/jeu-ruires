@@ -83,6 +83,9 @@ let foxes = [];
 let chickens = [];
 
 let sprites = {};
+let sounds = {};
+let musics = [];
+let currentMusicId = null;
 
 let actionnedKeys = {
     space: false,
@@ -186,7 +189,7 @@ function resetGame() {
     }
 }
 
-function preload() {
+function imagePreload() {
     loadImage('./sprites/serpent-stop.png', (img) => {
         sprites['snakeStill'] = new Sprite(img, 28, 64);
     });
@@ -202,6 +205,48 @@ function preload() {
     loadImage('./sprites/Pomme.png', (img) => {
         sprites['apple'] = new Sprite(img, img.width, img.height);
     });
+}
+
+function soundPreload() {
+    loadSound('./audio/apple-eat.wav', (sound) => {
+        sounds['appleEat'] = sound;
+    });
+    loadSound('./audio/chicken buck.wav', (sound) => {
+        sounds['chickenTouch'] = sound;
+    });
+    loadSound('./audio/chicken.wav', (sound) => {
+        sounds['chickenCapture'] = sound;
+    });
+    loadSound('./audio/drown.mp3', (sound) => {
+        sounds['drown'] = sound;
+    });
+    loadSound('./audio/hunger-death.mp3', (sound) => {
+        sounds['hungerDeath'] = sound;
+    });
+    loadSound('./audio/hungry.wav', (sound) => {
+        sounds['hungry'] = sound;
+    });
+    loadSound('./audio/score.wav', (sound) => {
+        sounds['score'] = sound;
+    });
+    loadSound('./audio/snake-crawl.wav', (sound) => {
+        sounds['snakeCrawl'] = sound;
+    });
+}
+
+function musicPreload() {
+    loadSound('./audio/music1.mp3', (music) => {
+        musics.push(music);
+    });
+    loadSound('./audio/music2.mp3', (music) => {
+        musics.push(music);
+    });
+}
+
+function preload() {
+    imagePreload();
+    soundPreload();
+    musicPreload();
 }
 
 function setup() {
@@ -239,20 +284,21 @@ function keyPressed() {
     if (key === ' ') {
         actionnedKeys.space = true;
         snake.setSprite(sprites.snakeMove);
+        return false;
     }
     if (key === 'r' && snake.isCaptured()) {
         console.log('restart');
         resetGame();
+        return false;
     }
-    return false;
 }
 
 function keyReleased() {
     if (key === ' ') {
         actionnedKeys.space = false;
         snake.setSprite(sprites.snakeStill);
+        return false;
     }
-    return false;
 }
 
 document.getElementById('closeDialog').addEventListener('click', (event) => {
