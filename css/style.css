@@ -6,141 +6,70 @@
     box-sizing: border-box;
 }
 
+html {
+    height: 100%;
+}
+
 body {
     font-family: var(--font-sans);
     background-color: var(--gray-7);
     margin: 0;
     color: var(--gray-0);
-}
-
-/* En-tête */
-.page-header {
-    background-color: var(--gray-9);
-    padding: var(--size-8) var(--size-10);
-    text-align: center;
-}
-
-.page-header__title {
-    font-size: var(--font-size-8);
-    font-weight: var(--font-weight-9);
-}
-
-/* Contenu principal */
-.main-content {
-    padding: var(--size-8) var(--size-10);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: var(--size-7);
-}
-
-.main-content__section {
-    background-color: var(--gray-2);
-    color: var(--gray-9);
-    border-radius: var(--radius-3);
-    padding: var(--size-6);
-    width: min(70vw, 600px);
-}
-
-.main-content__section__title {
-    text-align: center;
-    font-size: var(--font-size-5);
-    font-weight: var(--font-weight-7);
-    margin: 0;
-    margin-bottom: var(--size-4);
-}
-
-.main-content__section__nav {
-    width: 90%;
-    margin: auto;
-}
-
-/* Navigation */
-.navigation__list {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    gap: var(--size-2);
     font-size: var(--font-size-3);
-}
-
-.navigation__list__link {
-    color: var(--gray-9);
-    font-weight: var(--font-weight-6);
-}
-
-.navigation__list__link:hover {
-    color: var(--gray-9);
-    text-decoration: none;
-    font-weight: var(--font-weight-9);
-}
-
-.navigation__list__link.navigation__list__link--disabled {
-    color: var(--gray-4);
-    pointer-events: none;
-}
-
-/* Section Snake */
-.snake-section__paragraph {
-    font-size: var(--font-size-3);
-    text-align: center;
-}
-
-.snake-section__paragraph__link {
-    color: var(--gray-9);
-    font-weight: var(--font-weight-6);
-}
-
-.snake-section__paragraph__link:hover {
-    color: var(--gray-9);
-    text-decoration: none;
-    font-weight: var(--font-weight-9);
-}
-
-.snake-section__paragraph__link.snake-section__paragraph__link--disabled {
-    color: var(--gray-4);
-    pointer-events: none;
-}
-
-/* Saisie */
-#input {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: var(--size-2);
-}
-
-#input label {
-    font-size: var(--font-size-3);
-}
-
-#programme {
-    align-self: stretch;
-    height: var(--size-13);
-    padding: var(--size-3) var(--size-5);
-    border-width: var(--border-size-2);
-    border-radius: var(--radius-2);
-    border-color: var(--green-9);
-    background-color: var(--green-0);
-    font-family: var(--font-mono);
-    margin: var(--size-2);
-}
-
-#test {
-    font-size: var(--font-size-3);
-    background-color: var(--grape-9);
-    color: var(--yellow-1);
-    border: none;
-    padding: var(--size-2) var(--size-4);
-    border-radius: var(--radius-3);
-    align-self: center;
-}
-
-#game {
-    padding: var(--size-5);
+    height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+dialog {
+    position: absolute;
+    inset: var(--size-9);
+    width: clamp(35rem, 80vw, 60rem);
+    height: clamp(10rem, 80vh, 60rem);
+    overflow: scroll;
+    display: none;
+}
+
+dialog[open] {
+    display: flex;
+    flex-direction: column;
+}
+
+#water,
+#mountain,
+dialog p img {
+    display: inline-block;
+    margin-inline: var(--size-2);
+    vertical-align: middle;
+    width: var(--size-3);
+}
+
+#water,
+#mountain {
+    height: var(--size-3);
+}
+
+dialog p {
+    margin-bottom: var(--size-7);
+}
+
+dialog h1 {
+    text-align: center;
+    margin-top: 0;
+    margin-bottom: var(--size-8);
+}
+
+dialog button {
+    text-align: center;
+    padding: 1rem 1.5rem;
+    align-self: center;
+}
+
+#water {
+    background-color: blue;
+}
+
+#mountain {
+    background-color: sienna;
 }

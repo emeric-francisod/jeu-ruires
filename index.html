@@ -4,8 +4,44 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Activité jeu de l'école des Ruires</title>
+        <link rel="stylesheet" href="css/style.css" />
     </head>
     <body>
+        <dialog id="rules" open>
+            <h1>Jeu des Ruires</h1>
+            <p>
+                Bienvenue dans le jeu créé par les enfants de l'école des Ruires. Avant de continuer, nous
+                t'encourageons à lire les règles du jeu.
+            </p>
+            <p>
+                Ce jeu est basé sur le "Poule - Renard - Vipère". Tu es une vipère
+                <img src="images/Serpent_Arrêt.gif" alt="Animation de vipère qui rampe" id="snake" /> et ton objectif
+                est de capturer les renards tout en évitant les poules.
+            </p>
+            <p>
+                Tu peux faire avancer ta vipère en appuyant sur la touche <kbd>espace</kbd> et la faire tourner en
+                bougeant ta souris.
+            </p>
+            <p>
+                Tu possède une barre d'énergie qui se vide petit à petit. Tu perdras aussi de l'énergie si une poule
+                <img src="images/Poule_Marche.gif" alt="Animation de poule qui marche" id="chicken" /> te touche. Pour
+                remplir ta jauge d'énergie, mange les pommes <img src="images/Pomme.png" alt="Pomme" id="apple" /> que
+                tu trouveras!
+            </p>
+            <p>
+                Tu possède également un score qui augmente continuellement. Capturer un renard
+                <img src="images/Renard_Marche.gif" alt="Animation de renard qui marche" id="fox" />
+                te donnera un bonus de score. Ton meilleurs score sera sauvegardé pour les parties suivantes.
+            </p>
+            <p>
+                Pour terminer, même si les serpent savent généralement bien nager ou vivre en montagne, tu ne peux te
+                déplacer que sur la terre ferme. Évite l'eau <span id="water"></span>, dans laquelle tu te noierais. Les
+                montagnes <span id="mountain"></span> t'empêcheront simplement d'avancer
+            </p>
+
+            <button type="button" id="closeDialog">Commencer à jouer</button>
+        </dialog>
+
         <script defer src="js/p5.min.js"></script>
         <script defer src="js/utility.js"></script>
         <script src="js/game/entities/sprite.js"></script>

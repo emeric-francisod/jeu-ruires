@@ -210,7 +210,8 @@ function setup() {
     frameRate(SETTINGS.tickSpeed);
     colorMode(HSB);
 
-    resetGame();
+    //resetGame();
+    noLoop();
 }
 
 function draw() {
@@ -253,3 +254,8 @@ function keyReleased() {
     }
     return false;
 }
+
+document.getElementById('closeDialog').addEventListener('click', (event) => {
+    document.getElementById('rules').removeAttribute('open');
+    resetGame();
+});
