@@ -24,8 +24,8 @@ const foxSettings = {
     spawnCap: 10,
     initialSpawnCap: 10,
     minSpawnRadius: 7,
-    maxSpawnRadius: SETTINGS.width / SETTINGS.gridSize,
-    despawnRadius: (SETTINGS.width * 2) / SETTINGS.gridSize,
+    maxSpawnRadius: (SETTINGS.width * 0.5) / SETTINGS.gridSize,
+    despawnRadius: SETTINGS.width / SETTINGS.gridSize,
     flightRadius: 7,
     initialFlightRadius: 7,
     minScorePercentage: 1,
@@ -42,8 +42,8 @@ const chickenSettings = {
     spawnCap: 5,
     initialSpawnCap: 5,
     minSpawnRadius: 15,
-    maxSpawnRadius: SETTINGS.width / SETTINGS.gridSize,
-    despawnRadius: (SETTINGS.width * 2) / SETTINGS.gridSize,
+    maxSpawnRadius: (SETTINGS.width * 0.5) / SETTINGS.gridSize,
+    despawnRadius: SETTINGS.width / SETTINGS.gridSize,
     attackRadius: 10,
     initialAttackRadius: 10,
     minDammage: 1,
@@ -54,9 +54,9 @@ const chickenSettings = {
 
 const mapSettings = {
     gridSize: SETTINGS.gridSize,
-    perlinZoom: 0.001,
-    seaLevel: 0.36,
-    mountainLevel: 0.67,
+    perlinZoom: 0.002,
+    seaLevel: 0.4,
+    mountainLevel: 0.7,
     perlinOriginShift: 1000000,
 };
 
@@ -68,7 +68,7 @@ const appleSettings = {
     initialSpawnCap: 10,
     minSpawnRadius: 5,
     maxSpawnRadius: SETTINGS.width / 2 / SETTINGS.gridSize,
-    despawnRadius: (SETTINGS.width * 2) / SETTINGS.gridSize,
+    despawnRadius: SETTINGS.width / SETTINGS.gridSize,
     minNutritiveValue: 0,
     maxNutritiveValue: snakeSettings.maxEnergy * 0.3,
 };

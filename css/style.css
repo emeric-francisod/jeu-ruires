@@ -22,6 +22,10 @@ body {
     align-items: center;
 }
 
+kbd {
+    background-color: #d7d7d7;
+}
+
 dialog {
     position: absolute;
     inset: var(--size-9);
