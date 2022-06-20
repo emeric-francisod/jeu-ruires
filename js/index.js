@@ -267,6 +267,9 @@ function setup() {
 
     //resetGame();
     noLoop();
+    let buttonElt = document.getElementById('closeDialog');
+    buttonElt.removeAttribute('disabled');
+    buttonElt.textContent = 'Commencer à jouer';
 }
 
 function draw() {
