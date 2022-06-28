@@ -125,8 +125,8 @@ function resetFailUI() {
             SETTINGS.height * 0.05,
             Modernizr.touchevents
                 ? 'Pour recommencer, appuie sur ton écran'
-                : "Pour recommencer, appuie sur la touche 'r'.",
-            16,
+                : "Pour recommencer, appuie sur la lettre r sur ton clavier.",
+            32,
             color(295, 10, 95),
             'top',
             'center',
